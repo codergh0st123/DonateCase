@@ -27,7 +27,12 @@ api-version: 1.16
 commands:
   donatecase:
     aliases: [dc]
+  potdec:
+    usage: /potdec create
+    permission: donatecase.potdec
 permissions:
+  donatecase.potdec:
+    default: op
   donatecase.player:
     default: true
   donatecase.mod:
@@ -39,6 +44,7 @@ permissions:
     children:
       donatecase.player: true
       donatecase.mod: true
+      donatecase.potdec: true
   donatecase.*:
     default: op
     children:

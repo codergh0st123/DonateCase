@@ -49,6 +49,9 @@ import com.jodexindustries.donatecase.spigot.materials.HEADMaterialHandlerImpl;
 import com.jodexindustries.donatecase.spigot.materials.IAMaterialHandlerImpl;
 import com.jodexindustries.donatecase.spigot.materials.MCURLMaterialHandlerImpl;
 import com.jodexindustries.donatecase.spigot.materials.OraxenMaterialHandlerImpl;
+import com.jodexindustries.donatecase.spigot.potdec.PotDecCommand;
+import com.jodexindustries.donatecase.spigot.potdec.PotDecListener;
+import com.jodexindustries.donatecase.spigot.potdec.PotDecManager;
 import com.jodexindustries.donatecase.spigot.tools.BukkitUtils;
 import com.jodexindustries.donatecase.spigot.tools.Metrics;
 import com.jodexindustries.donatecase.spigot.tools.ToolsImpl;
@@ -98,6 +101,7 @@ public class BukkitBackend extends BackendPlatform {
       this.loadHologramDrivers();
       Bukkit.getServer().getPluginManager().registerEvents(new EventListener(this), this.plugin);
       this.api.load();
+      this.registerPotDec();
       Bukkit.getScheduler().runTask(this.plugin, () -> this.api.getHologramManager().load());
       this.loadMetrics();
       this.loadPacketEventsAPI();
@@ -176,6 +180,19 @@ public class BukkitBackend extends BackendPlatform {
 
    public int getSpawnRadius() {
       return Bukkit.getSpawnRadius();
+   }
+
+   private void registerPotDec() {
+      PotDecManager manager = new PotDecManager(this.plugin);
+      manager.load();
+      PotDecCommand command = new PotDecCommand(manager);
+      PluginCommand pluginCommand = this.plugin.getCommand("potdec");
+      if (pluginCommand != null) {
+         pluginCommand.setExecutor(command);
+         pluginCommand.setTabCompleter(command);
+      }
+
+      Bukkit.getServer().getPluginManager().registerEvents(new PotDecListener(this.plugin, manager), this.plugin);
    }
 
    private void registerDefaultCommand() {
