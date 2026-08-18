@@ -90,7 +90,7 @@ public class SelectAnimation extends BukkitJavaAnimation {
          if (this.tick == 0) {
             for(Pair<ArmorStandCreator, CaseLocation> pair : this.asList) {
                ArmorStandCreator as = (ArmorStandCreator)pair.fst;
-               this.location.yaw(SelectAnimation.this.settings.facing.yaw);
+               this.location.yaw((SelectAnimation.this.settings.facing.yaw + 180.0F) % 360.0F);
                as.teleport(this.location);
             }
          }

@@ -5,8 +5,10 @@ import com.jodexindustries.donatecase.api.armorstand.ArmorStandCreator;
 import com.jodexindustries.donatecase.api.data.ActiveCase;
 import com.jodexindustries.donatecase.api.data.animation.Animation;
 import com.jodexindustries.donatecase.api.event.player.ArmorStandCreatorInteractEvent;
+import com.jodexindustries.donatecase.spigot.tools.BukkitUtils;
 import java.util.UUID;
 import net.kyori.event.EventSubscriber;
+import org.bukkit.Sound;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -21,6 +23,7 @@ public class SelectAnimationListener implements EventSubscriber<ArmorStandCreato
          if (!task.selected && task.canSelect) {
             if (animation.getPlayer().getUniqueId().equals(event.player().getUniqueId())) {
                task.selected = true;
+               BukkitUtils.toBukkit(event.player()).playSound(BukkitUtils.toBukkit(creator.getLocation()), Sound.BLOCK_CHEST_OPEN, 1.0F, 1.0F);
                creator.setEquipment(animation.settings.itemSlot, animation.getWinItem().material().itemStack());
                if (animation.getWinItem().material().displayName() != null && !animation.getWinItem().material().displayName().isEmpty()) {
                   creator.setCustomNameVisible(true);
