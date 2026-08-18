@@ -35,6 +35,14 @@ public class SelectAnimation extends BukkitJavaAnimation {
       double origY = this.getLocation().y() - (double)0.5F;
       double origZ = this.getLocation().z() + (double)0.5F;
       CaseLocation origCaseLocation = this.getLocation().clone().x(origX).y(origY).z(origZ);
+      boolean boxSelect = "BOX_SELECT".equalsIgnoreCase(this.getCaseData().animation());
+      Location playerLocation = this.getPlayer().getLocation();
+      double yawRadians = Math.toRadians((double)playerLocation.getYaw());
+      double lookX = -Math.sin(yawRadians);
+      double lookZ = Math.cos(yawRadians);
+      double sideX = lookZ;
+      double sideZ = -lookX;
+      CaseLocation spawnLocation = boxSelect ? origCaseLocation.clone().x(origX - lookX * this.settings.radius).z(origZ - lookZ * this.settings.radius) : origCaseLocation;
 
       for(double y = (double)-1.0F; y < (double)2.0F; ++y) {
          for(double horizonOffset = (double)-1.0F; horizonOffset < (double)2.0F; ++horizonOffset) {
@@ -50,9 +58,11 @@ public class SelectAnimation extends BukkitJavaAnimation {
                as.setVisible(false);
                as.setGravity(false);
                as.setSmall(true);
-               as.teleport(origCaseLocation);
+               as.teleport(spawnLocation);
                as.spawn();
-               if (this.settings.facing != Facing.EAST && this.settings.facing != Facing.WEST) {
+               if (boxSelect) {
+                  asList.add(Pair.of(as, as.getLocation().clone().x(origX - lookX * this.settings.radius + sideX * horizonOffset * this.settings.radius).y(origY + y * this.settings.radius).z(origZ - lookZ * this.settings.radius + sideZ * horizonOffset * this.settings.radius)));
+               } else if (this.settings.facing != Facing.EAST && this.settings.facing != Facing.WEST) {
                   asList.add(Pair.of(as, as.getLocation().clone().x(origX + horizonOffset * this.settings.radius).y(origY + y * this.settings.radius).z(origZ)));
                } else {
                   asList.add(Pair.of(as, as.getLocation().clone().x(origX).y(origY + y * this.settings.radius).z(origZ + horizonOffset * this.settings.radius)));
@@ -61,7 +71,7 @@ public class SelectAnimation extends BukkitJavaAnimation {
          }
       }
 
-      this.task = new Task(asList, origCaseLocation);
+      this.task = new Task(asList, spawnLocation, boxSelect ? (playerLocation.getYaw() + 180.0F) % 360.0F : (this.settings.facing.yaw + 180.0F) % 360.0F);
       api.getPlatform().getScheduler().run(api.getPlatform(), (Consumer)this.task, 0L, (long)this.settings.period);
    }
 
@@ -75,22 +85,24 @@ public class SelectAnimation extends BukkitJavaAnimation {
       private final CaseLocation location;
       private final List<Pair<ArmorStandCreator, CaseLocation>> asList;
       private final World world;
+      private final float yaw;
       public boolean canSelect = false;
       public volatile boolean selected = false;
       private Pair<ArmorStandCreator, CaseLocation> randomAS;
       private final List<ArmorStandCreator> toDelete = new ArrayList<>();
 
-      public Task(final List<Pair<ArmorStandCreator, CaseLocation>> asList, CaseLocation location) {
+      public Task(final List<Pair<ArmorStandCreator, CaseLocation>> asList, CaseLocation location, float yaw) {
          this.asList = asList;
          this.location = location;
          this.world = SelectAnimation.this.getPlayer().getWorld();
+         this.yaw = yaw;
       }
 
       public void accept(SchedulerTask task) {
          if (this.tick == 0) {
             for(Pair<ArmorStandCreator, CaseLocation> pair : this.asList) {
                ArmorStandCreator as = (ArmorStandCreator)pair.fst;
-               this.location.yaw((SelectAnimation.this.settings.facing.yaw + 180.0F) % 360.0F);
+               this.location.yaw(this.yaw);
                as.teleport(this.location);
             }
          }
