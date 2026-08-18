@@ -124,7 +124,7 @@ public class PlayerMeta extends LivingEntityMeta {
 
    public @Nullable NBTCompound getLeftShoulderData() {
       isVersionNewer(ServerVersion.V_1_11);
-      return (NBTCompound)super.metadata.getIndex(offset((byte)15, 4), (Object)null);
+      return (NBTCompound)super.metadata.getIndex(offset((byte)15, 4), null);
    }
 
    public void setLeftShoulderData(@Nullable NBTCompound value) {
@@ -137,7 +137,7 @@ public class PlayerMeta extends LivingEntityMeta {
 
    public @Nullable NBTCompound getRightShoulderData() {
       isVersionNewer(ServerVersion.V_1_11);
-      return (NBTCompound)super.metadata.getIndex(offset((byte)15, 5), (Object)null);
+      return (NBTCompound)super.metadata.getIndex(offset((byte)15, 5), null);
    }
 
    public void setRightShoulderData(@Nullable NBTCompound value) {

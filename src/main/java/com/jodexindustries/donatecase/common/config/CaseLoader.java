@@ -29,7 +29,7 @@ public class CaseLoader implements Loadable {
       for(Map.Entry<String, List<Config>> entry : this.getCases().entrySet()) {
          String caseType = (String)entry.getKey();
 
-         for(Config config : (List)entry.getValue()) {
+         for(Config config : entry.getValue()) {
             ConfigurationNode caseSection = config.node("case");
             if (caseSection != null && !caseSection.isNull()) {
                try {
@@ -54,14 +54,14 @@ public class CaseLoader implements Loadable {
    }
 
    private Map<String, List<Config>> getCases() {
-      Map<String, List<Config>> cases = new HashMap();
+      Map<String, List<Config>> cases = new HashMap<>();
 
       for(ConfigImpl config : this.api.getConfigManager().get().values()) {
          String path = config.path();
          String[] parts = path.split("/");
          if (parts.length >= 4 && parts[2].equals("cases")) {
             String caseType = parts[3].substring(0, parts[3].lastIndexOf(".yml"));
-            ((List)cases.computeIfAbsent(caseType, (k) -> new ArrayList())).add(config);
+            ((List)cases.computeIfAbsent(caseType, (k) -> new ArrayList<>())).add(config);
          }
       }
 

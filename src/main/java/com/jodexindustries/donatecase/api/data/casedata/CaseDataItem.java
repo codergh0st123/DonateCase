@@ -72,7 +72,7 @@ public class CaseDataItem implements Cloneable {
    }
 
    private static Map<String, RandomAction> cloneRandomActionsMap(Map<String, RandomAction> originalMap) {
-      Map<String, RandomAction> clonedMap = new HashMap();
+      Map<String, RandomAction> clonedMap = new HashMap<>();
 
       for(Map.Entry<String, RandomAction> entry : originalMap.entrySet()) {
          clonedMap.put((String)entry.getKey(), ((RandomAction)entry.getValue()).clone());

@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class MaterialManagerImpl implements MaterialManager {
-   private static final Map<String, CaseMaterial> registeredMaterials = new ConcurrentHashMap();
+   private static final Map<String, CaseMaterial> registeredMaterials = new ConcurrentHashMap<>();
    private final Platform platform;
 
    public MaterialManagerImpl(DCAPI api) {
@@ -38,7 +38,7 @@ public class MaterialManagerImpl implements MaterialManager {
    }
 
    public void unregister() {
-      List<String> list = new ArrayList(registeredMaterials.keySet());
+      List<String> list = new ArrayList<>(registeredMaterials.keySet());
       list.forEach(this::unregister);
    }
 

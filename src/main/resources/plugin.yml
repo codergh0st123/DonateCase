@@ -17,6 +17,7 @@ softdepend:
   - CMI
   - HolographicDisplays
   - FancyHolograms
+  - GDisplayHologram
   - Multiverse-Core
   - MultiWorld
   - packetevents

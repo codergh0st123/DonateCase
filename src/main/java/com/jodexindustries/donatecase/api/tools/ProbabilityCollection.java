@@ -85,7 +85,7 @@ public final class ProbabilityCollection<E> {
       if (this.isEmpty()) {
          throw new IllegalStateException("Cannot get an object out of a empty collection");
       } else {
-         ProbabilitySetElement<E> toFind = new ProbabilitySetElement<E>((Object)null, (double)0.0F);
+         ProbabilitySetElement<E> toFind = new ProbabilitySetElement<E>(null, (double)0.0F);
          toFind.setIndex(this.random.nextDouble((double)1.0F, this.totalProbability + (double)1.0F));
          return (E)((ProbabilitySetElement)Objects.requireNonNull((ProbabilitySetElement)this.collection.floor(toFind))).getObject();
       }

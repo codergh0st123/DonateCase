@@ -15,7 +15,7 @@ public class WrapperEntityCreature extends WrapperLivingEntity {
 
    public WrapperEntityCreature(int entityId, @NotNull UUID uuid, EntityType entityType, EntityMeta meta) {
       super(entityId, uuid, entityType, meta);
-      this.aiGroups = new HashSet();
+      this.aiGroups = new HashSet<>();
    }
 
    public WrapperEntityCreature(int entityId, @NotNull UUID uuid, EntityType entityType) {

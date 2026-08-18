@@ -41,14 +41,14 @@ public class InternalAddonDescription {
          this.mainClass = config.node(new Object[]{"main"}).getString();
          this.version = config.node(new Object[]{"version"}).getString();
          this.apiVersion = config.node(new Object[]{"api"}).getString();
-         this.authors = config.node(new Object[]{"authors"}).getList(String.class, new ArrayList());
+         this.authors = config.node(new Object[]{"authors"}).getList(String.class, new ArrayList<>());
          if (config.node(new Object[]{"author"}) != null) {
             this.authors.add(config.node(new Object[]{"author"}).getString());
          }
 
-         this.softDepend = config.node(new Object[]{"softdepend"}).getList(String.class, new ArrayList());
-         this.depend = config.node(new Object[]{"depend"}).getList(String.class, new ArrayList());
-         this.platforms = config.node(new Object[]{"platforms"}).getList(String.class, new ArrayList());
+         this.softDepend = config.node(new Object[]{"softdepend"}).getList(String.class, new ArrayList<>());
+         this.depend = config.node(new Object[]{"depend"}).getList(String.class, new ArrayList<>());
+         this.platforms = config.node(new Object[]{"platforms"}).getList(String.class, new ArrayList<>());
          jar.close();
       }
    }

@@ -23,7 +23,7 @@ public class VillagerMeta extends BaseVillagerMeta {
    }
 
    public @NotNull VillagerData getVillagerData() {
-      int[] data = (int[])super.metadata.getIndex((byte)18, (Object)null);
+      int[] data = (int[])super.metadata.getIndex((byte)18, null);
       return data == null ? new VillagerData(VillagerTypes.PLAINS, VillagerProfessions.NONE, VillagerMeta.Level.NOVICE.ordinal()) : new VillagerData(TYPES[data[0]], PROFESSIONS[data[1]], VillagerMeta.Level.VALUES[data[2] - 1].ordinal());
    }
 

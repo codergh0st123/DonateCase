@@ -41,7 +41,7 @@ public final class WrapperEntityAttributes {
    }
 
    public List<WrapperPlayServerUpdateAttributes.Property> getProperties() {
-      return new ArrayList(this.properties);
+      return new ArrayList<>(this.properties);
    }
 
    public void forEach(Consumer<WrapperPlayServerUpdateAttributes.Property> action) {

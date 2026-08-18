@@ -167,81 +167,81 @@ public class ConfigurationSectionImpl implements ConfigurationSection {
    public @NotNull List<String> getStringList(@NotNull String path) {
       try {
          List<String> list = this.node(path).getList(String.class);
-         return (List<String>)(list == null ? new ArrayList() : list);
+         return (List<String>)(list == null ? new ArrayList<>() : list);
       } catch (SerializationException var3) {
-         return new ArrayList();
+         return new ArrayList<>();
       }
    }
 
    public @NotNull List<Integer> getIntegerList(@NotNull String path) {
       try {
          List<Integer> list = this.node(path).getList(Integer.class);
-         return (List<Integer>)(list == null ? new ArrayList() : list);
+         return (List<Integer>)(list == null ? new ArrayList<>() : list);
       } catch (SerializationException var3) {
-         return new ArrayList();
+         return new ArrayList<>();
       }
    }
 
    public @NotNull List<Boolean> getBooleanList(@NotNull String path) {
       try {
          List<Boolean> list = this.node(path).getList(Boolean.class);
-         return (List<Boolean>)(list == null ? new ArrayList() : list);
+         return (List<Boolean>)(list == null ? new ArrayList<>() : list);
       } catch (SerializationException var3) {
-         return new ArrayList();
+         return new ArrayList<>();
       }
    }
 
    public @NotNull List<Double> getDoubleList(@NotNull String path) {
       try {
          List<Double> list = this.node(path).getList(Double.class);
-         return (List<Double>)(list == null ? new ArrayList() : list);
+         return (List<Double>)(list == null ? new ArrayList<>() : list);
       } catch (SerializationException var3) {
-         return new ArrayList();
+         return new ArrayList<>();
       }
    }
 
    public @NotNull List<Float> getFloatList(@NotNull String path) {
       try {
          List<Float> list = this.node(path).getList(Float.class);
-         return (List<Float>)(list == null ? new ArrayList() : list);
+         return (List<Float>)(list == null ? new ArrayList<>() : list);
       } catch (SerializationException var3) {
-         return new ArrayList();
+         return new ArrayList<>();
       }
    }
 
    public @NotNull List<Long> getLongList(@NotNull String path) {
       try {
          List<Long> list = this.node(path).getList(Long.class);
-         return (List<Long>)(list == null ? new ArrayList() : list);
+         return (List<Long>)(list == null ? new ArrayList<>() : list);
       } catch (SerializationException var3) {
-         return new ArrayList();
+         return new ArrayList<>();
       }
    }
 
    public @NotNull List<Byte> getByteList(@NotNull String path) {
       try {
          List<Byte> list = this.node(path).getList(Byte.class);
-         return (List<Byte>)(list == null ? new ArrayList() : list);
+         return (List<Byte>)(list == null ? new ArrayList<>() : list);
       } catch (SerializationException var3) {
-         return new ArrayList();
+         return new ArrayList<>();
       }
    }
 
    public @NotNull List<Character> getCharacterList(@NotNull String path) {
       try {
          List<Character> list = this.node(path).getList(Character.class);
-         return (List<Character>)(list == null ? new ArrayList() : list);
+         return (List<Character>)(list == null ? new ArrayList<>() : list);
       } catch (SerializationException var3) {
-         return new ArrayList();
+         return new ArrayList<>();
       }
    }
 
    public @NotNull List<Short> getShortList(@NotNull String path) {
       try {
          List<Short> list = this.node(path).getList(Short.class);
-         return (List<Short>)(list == null ? new ArrayList() : list);
+         return (List<Short>)(list == null ? new ArrayList<>() : list);
       } catch (SerializationException var3) {
-         return new ArrayList();
+         return new ArrayList<>();
       }
    }
 
@@ -251,9 +251,9 @@ public class ConfigurationSectionImpl implements ConfigurationSection {
 
       try {
          List<Map<?, ?>> list = this.node.getList(typeToken);
-         return (List<Map<?, ?>>)(list == null ? new ArrayList() : list);
+         return (List<Map<?, ?>>)(list == null ? new ArrayList<>() : list);
       } catch (SerializationException var4) {
-         return new ArrayList();
+         return new ArrayList<>();
       }
    }
 
@@ -351,6 +351,20 @@ public class ConfigurationSectionImpl implements ConfigurationSection {
 
    public @Nullable ConfigurationSection getDefaultSection() {
       return null;
+   }
+
+   public @NotNull List<String> getComments(@NotNull String path) {
+      return List.of();
+   }
+
+   public @NotNull List<String> getInlineComments(@NotNull String path) {
+      return List.of();
+   }
+
+   public void setComments(@NotNull String path, @Nullable List<String> comments) {
+   }
+
+   public void setInlineComments(@NotNull String path, @Nullable List<String> comments) {
    }
 
    public void addDefault(@NotNull String path, @Nullable Object value) {

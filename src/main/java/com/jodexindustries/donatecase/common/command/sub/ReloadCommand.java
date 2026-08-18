@@ -31,7 +31,7 @@ public class ReloadCommand extends DefaultCommand {
    }
 
    public List<String> getTabCompletions(@NotNull DCCommandSender sender, @NotNull String label, String[] args) {
-      List<String> list = new ArrayList();
+      List<String> list = new ArrayList<>();
       if (args.length == 1) {
          list.add("cache");
       }

@@ -20,7 +20,7 @@ public class AddonsCommand extends DefaultCommand {
    }
 
    public boolean execute(@NotNull DCCommandSender sender, @NotNull String label, String[] args) {
-      List<InternalJavaAddon> addons = new ArrayList(this.api.getAddonManager().getMap().values());
+      List<InternalJavaAddon> addons = new ArrayList<>(this.api.getAddonManager().getMap().values());
       addons.sort(Comparator.comparing(InternalJavaAddon::getName));
       sender.sendMessage(DCTools.prefix("&7Currently loaded addons in DonateCase (&a" + addons.size() + "&7): " + this.compileAddons(addons)));
       return true;

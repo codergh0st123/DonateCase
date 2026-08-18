@@ -12,8 +12,8 @@ import java.util.function.Consumer;
 final class CachedSkinFetcherImpl implements SkinFetcher {
    private final long cacheDuration;
    private final Consumer<MojangApiError> onErr;
-   private final Map<String, CachedData> cache = new HashMap();
-   private final Map<UUID, CachedData> cacheUUID = new HashMap();
+   private final Map<String, CachedData> cache = new HashMap<>();
+   private final Map<UUID, CachedData> cacheUUID = new HashMap<>();
 
    CachedSkinFetcherImpl(Consumer<MojangApiError> onErr, long cacheDuration) {
       this.onErr = onErr;

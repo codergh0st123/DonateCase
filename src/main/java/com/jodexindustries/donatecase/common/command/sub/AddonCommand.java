@@ -52,7 +52,7 @@ public class AddonCommand extends DefaultCommand {
    }
 
    public List<String> getTabCompletions(@NotNull DCCommandSender sender, @NotNull String label, String[] args) {
-      List<String> list = new ArrayList();
+      List<String> list = new ArrayList<>();
       if (args.length == 1) {
          list.add("enable");
          list.add("disable");
@@ -174,7 +174,7 @@ public class AddonCommand extends DefaultCommand {
    }
 
    private List<String> getAddonsFiles() {
-      List<String> addons = new ArrayList();
+      List<String> addons = new ArrayList<>();
       File addonsDir = this.api.getAddonManager().getFolder();
       File[] files = addonsDir.listFiles();
       return files == null ? addons : (List)Arrays.stream(files).map(File::getName).filter((name) -> name.endsWith(".jar")).collect(Collectors.toList());

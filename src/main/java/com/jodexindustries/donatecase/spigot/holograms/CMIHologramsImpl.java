@@ -1,41 +1,57 @@
 package com.jodexindustries.donatecase.spigot.holograms;
 
-import com.Zrips.CMI.CMI;
-import com.Zrips.CMI.Modules.Holograms.CMIHologram;
 import com.jodexindustries.donatecase.api.data.casedata.CaseData;
 import com.jodexindustries.donatecase.api.data.hologram.HologramDriver;
 import com.jodexindustries.donatecase.api.data.storage.CaseLocation;
 import com.jodexindustries.donatecase.spigot.tools.BukkitUtils;
+import com.jodexindustries.donatecase.spigot.tools.OptionalPluginApi;
+
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
-import net.Zrips.CMILib.Container.CMILocation;
 
 public class CMIHologramsImpl implements HologramDriver {
-   private final HashMap<CaseLocation, CMIHologram> holograms = new HashMap();
 
-   public void create(CaseLocation block, CaseData.Hologram caseHologram) {
-      if (caseHologram.enabled()) {
-         double height = caseHologram.height();
-         CMILocation location = new CMILocation(BukkitUtils.toBukkit(block).add((double)0.5F, height, (double)0.5F));
-         CMIHologram hologram = new CMIHologram("DonateCase-" + UUID.randomUUID(), location);
-         hologram.setLines(caseHologram.messages());
-         hologram.setShowRange(caseHologram.range());
-         CMI.getInstance().getHologramManager().addHologram(hologram);
-         hologram.update();
-         this.holograms.put(block, hologram);
-      }
-   }
+    private final Map<CaseLocation, Object> holograms = new HashMap<>();
 
-   public void remove(CaseLocation block) {
-      if (this.holograms.containsKey(block)) {
-         CMIHologram hologram = (CMIHologram)this.holograms.get(block);
-         this.holograms.remove(block);
-         hologram.remove();
-      }
-   }
+    @Override
+    public void create(CaseLocation block, CaseData.Hologram caseHologram) {
+        if (!caseHologram.enabled()) {
+            return;
+        }
 
-   public void remove() {
-      this.holograms.values().forEach(CMIHologram::remove);
-      this.holograms.clear();
-   }
+        Object location = OptionalPluginApi.create(
+                "net.Zrips.CMILib.Container.CMILocation",
+                BukkitUtils.toBukkit(block).add(0.5D, caseHologram.height(), 0.5D)
+        );
+        Object hologram = OptionalPluginApi.create(
+                "com.Zrips.CMI.Modules.Holograms.CMIHologram",
+                "DonateCase-" + UUID.randomUUID(),
+                location
+        );
+
+        if (hologram == null) {
+            return;
+        }
+
+        OptionalPluginApi.invoke(hologram, "setLines", caseHologram.messages());
+        OptionalPluginApi.invoke(hologram, "setShowRange", caseHologram.range());
+        Object cmi = OptionalPluginApi.invokeStatic("com.Zrips.CMI.CMI", "getInstance");
+        Object manager = OptionalPluginApi.invoke(cmi, "getHologramManager");
+        OptionalPluginApi.invoke(manager, "addHologram", hologram);
+        OptionalPluginApi.invoke(hologram, "update");
+        holograms.put(block, hologram);
+    }
+
+    @Override
+    public void remove(CaseLocation block) {
+        Object hologram = holograms.remove(block);
+        OptionalPluginApi.invoke(hologram, "remove");
+    }
+
+    @Override
+    public void remove() {
+        holograms.values().forEach(hologram -> OptionalPluginApi.invoke(hologram, "remove"));
+        holograms.clear();
+    }
 }

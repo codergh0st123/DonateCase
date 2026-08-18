@@ -12,7 +12,7 @@ public interface HologramManager extends HologramDriver {
    void unregister(@NotNull String var1);
 
    default void unregister() {
-      List<String> list = new ArrayList(this.get().keySet());
+      List<String> list = new ArrayList<>(this.get().keySet());
       list.forEach(this::unregister);
    }
 

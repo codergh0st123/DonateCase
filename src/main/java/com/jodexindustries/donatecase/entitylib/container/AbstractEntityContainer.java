@@ -10,8 +10,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractEntityContainer implements EntityContainer {
-   private final Map<UUID, WrapperEntity> entities = new ConcurrentHashMap();
-   private final Map<Integer, WrapperEntity> entitiesById = new ConcurrentHashMap();
+   private final Map<UUID, WrapperEntity> entities = new ConcurrentHashMap<>();
+   private final Map<Integer, WrapperEntity> entitiesById = new ConcurrentHashMap<>();
 
    public void addEntity(WrapperEntity entity) {
       this.entities.put(entity.getUuid(), entity);

@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class HologramManagerImpl implements HologramManager {
    private HologramDriver driver;
-   private final Map<String, HologramDriver> drivers = new ConcurrentHashMap();
+   private final Map<String, HologramDriver> drivers = new ConcurrentHashMap<>();
    private final DCAPI api;
 
    public HologramManagerImpl(DCAPI api) {

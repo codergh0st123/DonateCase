@@ -30,7 +30,7 @@ public class SelectAnimation extends BukkitJavaAnimation {
          throw new RuntimeException("Error with parsing animation settings", e);
       }
 
-      List<Pair<ArmorStandCreator, CaseLocation>> asList = new ArrayList();
+      List<Pair<ArmorStandCreator, CaseLocation>> asList = new ArrayList<>();
       double origX = this.getLocation().x() + (double)0.5F;
       double origY = this.getLocation().y() - (double)0.5F;
       double origZ = this.getLocation().z() + (double)0.5F;
@@ -78,7 +78,7 @@ public class SelectAnimation extends BukkitJavaAnimation {
       public boolean canSelect = false;
       public volatile boolean selected = false;
       private Pair<ArmorStandCreator, CaseLocation> randomAS;
-      private final List<ArmorStandCreator> toDelete = new ArrayList();
+      private final List<ArmorStandCreator> toDelete = new ArrayList<>();
 
       public Task(final List<Pair<ArmorStandCreator, CaseLocation>> asList, CaseLocation location) {
          this.asList = asList;

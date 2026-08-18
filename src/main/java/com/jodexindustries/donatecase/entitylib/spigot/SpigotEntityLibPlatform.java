@@ -40,7 +40,7 @@ public class SpigotEntityLibPlatform extends AbstractPlatform<JavaPlugin> {
       }
 
       if (settings.shouldUseBstats()) {
-         PacketEventsAPI<Plugin> pe = this.api.getPacketEvents();
+         PacketEventsAPI<?> pe = this.api.getPacketEvents();
          Metrics metrics = new Metrics((Plugin)pe.getPlugin(), 21916);
          metrics.addCustomChart(new SimplePie("entitylib-version", () -> EntityLib.getVersion().toString()));
       }
@@ -60,7 +60,7 @@ public class SpigotEntityLibPlatform extends AbstractPlatform<JavaPlugin> {
          return null;
       } else {
          for(World world : Bukkit.getWorlds()) {
-            Entity e = (Entity)world.getEntities().stream().filter((entity) -> entity.getEntityId() == entityId).findFirst().orElse((Object)null);
+            Entity e = (Entity)world.getEntities().stream().filter((entity) -> entity.getEntityId() == entityId).findFirst().orElse(null);
             if (e != null) {
                return new SpigotEntity(e);
             }

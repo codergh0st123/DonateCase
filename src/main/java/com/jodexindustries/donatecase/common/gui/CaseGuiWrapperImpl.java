@@ -66,7 +66,7 @@ public class CaseGuiWrapperImpl implements CaseGuiWrapper {
             }
          }
 
-         future.complete((Object)null);
+         future.complete(null);
       }), 0L);
       SCHEDULER.schedule(() -> {
          if (!future.isDone()) {
@@ -94,7 +94,7 @@ public class CaseGuiWrapperImpl implements CaseGuiWrapper {
    private void startUpdateTask() {
       int updateRate = this.temporary.updateRate();
       if (updateRate >= 0) {
-         this.platform.getScheduler().async(this.platform, (Consumer)((task) -> {
+         this.platform.getScheduler().async(this.platform, (Consumer<com.jodexindustries.donatecase.api.scheduler.SchedulerTask>) (task -> {
             if (!this.platform.getAPI().getGUIManager().getMap().containsKey(this.player.getUniqueId())) {
                task.cancel();
             }

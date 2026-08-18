@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.jetbrains.annotations.NotNull;
 
 public class GUIManagerImpl implements GUIManager {
-   private static final Map<UUID, CaseGuiWrapper> playersGui = new ConcurrentHashMap();
+   private static final Map<UUID, CaseGuiWrapper> playersGui = new ConcurrentHashMap<>();
    private final BackendPlatform platform;
 
    public GUIManagerImpl(DonateCase api) {

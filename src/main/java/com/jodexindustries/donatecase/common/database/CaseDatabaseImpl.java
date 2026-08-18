@@ -83,7 +83,7 @@ public class CaseDatabaseImpl extends CaseDatabase {
 
    public CompletableFuture<Map<String, Integer>> getKeys(String player) {
       return CompletableFuture.supplyAsync(() -> {
-         Map<String, Integer> keys = new HashMap();
+         Map<String, Integer> keys = new HashMap<>();
 
          try {
             for(PlayerKeysTable result : this.playerKeysTables.queryBuilder().where().eq("player", player).query()) {
@@ -163,7 +163,7 @@ public class CaseDatabaseImpl extends CaseDatabase {
 
    public CompletableFuture<Map<String, Integer>> getOpenCount(String player) {
       return CompletableFuture.supplyAsync(() -> {
-         Map<String, Integer> opens = new HashMap();
+         Map<String, Integer> opens = new HashMap<>();
 
          try {
             for(OpenInfoTable result : this.openInfoTables.queryBuilder().where().eq("player", player).query()) {
@@ -288,7 +288,7 @@ public class CaseDatabaseImpl extends CaseDatabase {
    }
 
    public CompletableFuture<List<CaseData.History>> getHistoryData() {
-      List<CaseData.History> result = new ArrayList();
+      List<CaseData.History> result = new ArrayList<>();
       return CompletableFuture.supplyAsync(() -> {
          try {
             result.addAll(this.historyDataTables.queryForAll());
@@ -301,7 +301,7 @@ public class CaseDatabaseImpl extends CaseDatabase {
    }
 
    public CompletableFuture<List<CaseData.History>> getHistoryData(String caseType) {
-      List<CaseData.History> result = new ArrayList();
+      List<CaseData.History> result = new ArrayList<>();
       return CompletableFuture.supplyAsync(() -> {
          try {
             result.addAll(this.historyDataTables.queryBuilder().orderBy("time", true).where().eq("case_type", caseType).query());

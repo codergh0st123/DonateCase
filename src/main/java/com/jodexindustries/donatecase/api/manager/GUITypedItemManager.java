@@ -18,7 +18,7 @@ public interface GUITypedItemManager {
    void unregister(String var1);
 
    default void unregister(Addon addon) {
-      List<TypedItem> list = new ArrayList(this.get(addon));
+      List<TypedItem> list = new ArrayList<>(this.get(addon));
       list.stream().map(TypedItem::id).forEach(this::unregister);
    }
 
@@ -27,16 +27,16 @@ public interface GUITypedItemManager {
    @Nullable TypedItem get(@NotNull String var1);
 
    default List<TypedItem> get(Addon addon) {
-      return (List)this.getMap().values().stream().filter((item) -> item.addon().equals(addon)).collect(Collectors.toList());
+      return this.getMap().values().stream().filter((item) -> item.addon().equals(addon)).collect(Collectors.toList());
    }
 
    @NotNull Map<String, TypedItem> getMap();
 
    default Optional<String> getByStart(@NotNull String string) {
-      Stream var10000 = this.getMap().keySet().stream();
-      String var10001 = string.toLowerCase();
-      Objects.requireNonNull(var10001);
-      return var10000.filter(var10001::startsWith).findFirst();
+      String prefix = string.toLowerCase();
+      return this.getMap().keySet().stream()
+              .filter(name -> name.toLowerCase().startsWith(prefix))
+              .findFirst();
    }
 
    Optional<TypedItem> getFromString(@NotNull String var1);

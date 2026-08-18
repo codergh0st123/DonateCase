@@ -51,8 +51,8 @@ public abstract class DCTools {
    }
 
    public static @NotNull List<String> resolveSDGCompletions(String[] args) {
-      List<String> value = new ArrayList(DCAPI.getInstance().getCaseManager().getMap().keySet());
-      List<String> list = new ArrayList();
+      List<String> value = new ArrayList<>(DCAPI.getInstance().getCaseManager().getMap().keySet());
+      List<String> list = new ArrayList<>();
       if (args.length == 1) {
          list.addAll((Collection)Arrays.stream(DCAPI.getInstance().getPlatform().getOnlinePlayers()).map(DCPlayer::getName).filter((px) -> px.startsWith(args[0])).collect(Collectors.toList()));
          return list;
@@ -61,7 +61,7 @@ public abstract class DCTools {
             list.add("-s");
             return list;
          } else {
-            return new ArrayList();
+            return new ArrayList<>();
          }
       } else {
          if (args[args.length - 1].isEmpty()) {
@@ -123,21 +123,19 @@ public abstract class DCTools {
    }
 
    public static List<String> rt(List<String> text, Collection<? extends Placeholder> placeholders) {
-      return text == null ? null : (List)text.stream().map((t) -> rt(t, placeholders)).collect(Collectors.toCollection(ArrayList::new));
+      return text == null ? null : text.stream().map((t) -> rt(t, placeholders)).collect(Collectors.toCollection(ArrayList::new));
    }
 
    public static List<String> rt(List<String> text, Placeholder... placeholders) {
-      return text == null ? null : (List)text.stream().map((t) -> rt(t, placeholders)).collect(Collectors.toCollection(ArrayList::new));
+      return text == null ? null : text.stream().map((t) -> rt(t, placeholders)).collect(Collectors.toCollection(ArrayList::new));
    }
 
    public static List<String> rc(List<String> list) {
-      return list == null ? null : (List)list.stream().map(DCTools::rc).collect(Collectors.toCollection(ArrayList::new));
+      return list == null ? null : list.stream().map(DCTools::rc).collect(Collectors.toCollection(ArrayList::new));
    }
 
    public static boolean isHasCommandForSender(DCCommandSender sender, Map<String, List<Map<String, SubCommand>>> addonsMap) {
-      Stream var10000 = addonsMap.keySet().stream();
-      Objects.requireNonNull(addonsMap);
-      return var10000.map(addonsMap::get).anyMatch((commands) -> isHasCommandForSender(sender, commands));
+      return addonsMap.values().stream().anyMatch(commands -> isHasCommandForSender(sender, commands));
    }
 
    public static boolean isHasCommandForSender(DCCommandSender sender, List<Map<String, SubCommand>> commands) {
@@ -173,7 +171,7 @@ public abstract class DCTools {
    }
 
    public static List<CaseData.History> sortHistoryDataByCase(List<CaseData.History> historyData, String caseType) {
-      List<CaseData.History> list = new ArrayList();
+      List<CaseData.History> list = new ArrayList<>();
 
       for(CaseData.History data : historyData) {
          if (data != null && data.caseType().equals(caseType)) {

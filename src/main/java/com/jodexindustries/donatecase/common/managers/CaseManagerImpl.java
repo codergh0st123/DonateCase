@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class CaseManagerImpl implements CaseManager {
-   private static final Map<String, CaseData> caseData = new ConcurrentHashMap();
+   private static final Map<String, CaseData> caseData = new ConcurrentHashMap<>();
 
    public boolean hasByType(@NotNull String type) {
       return caseData.containsKey(type);

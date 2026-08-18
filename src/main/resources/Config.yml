@@ -15,7 +15,7 @@ DonateCase:
     Password: 'password'
   # en_US, es_ES, ru_RU, ua_UA
   Languages: en_US
-  HologramDriver: DecentHolograms # CMI, DecentHolograms, HolographicDisplays or FancyHolograms
+  HologramDriver: GDisplayHologram # CMI, DecentHolograms, HolographicDisplays, FancyHolograms or GDisplayHologram
   LevelGroups: # Clear this section if you want to disable
     legend: 4
     deluxe: 3

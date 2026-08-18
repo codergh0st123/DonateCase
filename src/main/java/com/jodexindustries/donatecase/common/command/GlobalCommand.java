@@ -82,10 +82,10 @@ public class GlobalCommand implements SubCommandExecutor, SubCommandTabCompleter
    }
 
    private Map<String, List<Map<String, SubCommand>>> buildAddonsMap() {
-      Map<String, List<Map<String, SubCommand>>> addonsMap = new HashMap();
+      Map<String, List<Map<String, SubCommand>>> addonsMap = new HashMap<>();
       this.backend.getAPI().getSubCommandManager().getMap().forEach((subCommandName, subCommand) -> {
          Addon addon = subCommand.addon();
-         ((List)addonsMap.computeIfAbsent(addon.getName(), (k) -> new ArrayList())).add(Collections.singletonMap(subCommandName, subCommand));
+         ((List)addonsMap.computeIfAbsent(addon.getName(), (k) -> new ArrayList<>())).add(Collections.singletonMap(subCommandName, subCommand));
       });
       return addonsMap;
    }
@@ -127,10 +127,10 @@ public class GlobalCommand implements SubCommandExecutor, SubCommandTabCompleter
    }
 
    public List<String> getTabCompletions(@NotNull DCCommandSender sender, @NotNull String label, @NotNull String[] args) {
-      List<String> value = new ArrayList();
+      List<String> value = new ArrayList<>();
       if (args.length != 1) {
          SubCommand subCommand = this.backend.getAPI().getSubCommandManager().get(args[0].toLowerCase());
-         return (List<String>)(subCommand == null ? new ArrayList() : subCommand.getTabCompletions(sender, label, (String[])Arrays.copyOfRange(args, 1, args.length)));
+         return (List<String>)(subCommand == null ? new ArrayList<>() : subCommand.getTabCompletions(sender, label, (String[])Arrays.copyOfRange(args, 1, args.length)));
       } else {
          Map<String, SubCommand> subCommands = this.backend.getAPI().getSubCommandManager().getMap();
 

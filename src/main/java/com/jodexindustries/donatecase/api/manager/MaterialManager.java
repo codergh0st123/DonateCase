@@ -18,7 +18,7 @@ public interface MaterialManager {
    void unregister(String var1);
 
    default void unregister(Addon addon) {
-      List<CaseMaterial> list = new ArrayList(this.get(addon));
+      List<CaseMaterial> list = new ArrayList<>(this.get(addon));
       list.stream().map(CaseMaterial::id).forEach(this::unregister);
    }
 
@@ -29,14 +29,12 @@ public interface MaterialManager {
    @Nullable CaseMaterial get(@NotNull String var1);
 
    default List<CaseMaterial> get(Addon addon) {
-      return (List)this.getMap().values().stream().filter((material) -> material.addon().equals(addon)).collect(Collectors.toList());
+      return this.getMap().values().stream().filter((material) -> material.addon().equals(addon)).collect(Collectors.toList());
    }
 
    @NotNull Map<String, CaseMaterial> getMap();
 
    default Optional<String> getByStart(@NotNull String string) {
-      Stream var10000 = this.getMap().keySet().stream();
-      Objects.requireNonNull(string);
-      return var10000.filter(string::startsWith).findFirst();
+      return this.getMap().keySet().stream().filter(name -> name.startsWith(string)).findFirst();
    }
 }

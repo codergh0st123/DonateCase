@@ -1,6 +1,5 @@
 package com.jodexindustries.donatecase.spigot;
 
-import com.Zrips.CMI.Modules.ModuleHandling.CMIModule;
 import com.jodexindustries.donatecase.api.DCAPI;
 import com.jodexindustries.donatecase.api.data.action.CaseAction;
 import com.jodexindustries.donatecase.api.data.animation.CaseAnimation;
@@ -38,6 +37,7 @@ import com.jodexindustries.donatecase.spigot.api.platform.BukkitOfflinePlayer;
 import com.jodexindustries.donatecase.spigot.holograms.CMIHologramsImpl;
 import com.jodexindustries.donatecase.spigot.holograms.DecentHologramsImpl;
 import com.jodexindustries.donatecase.spigot.holograms.FancyHologramsImpl;
+import com.jodexindustries.donatecase.spigot.holograms.GDisplayHologramsImpl;
 import com.jodexindustries.donatecase.spigot.holograms.HolographicDisplaysImpl;
 import com.jodexindustries.donatecase.spigot.hook.packetevents.PacketEventsSupport;
 import com.jodexindustries.donatecase.spigot.hook.papi.PAPISupport;
@@ -241,11 +241,12 @@ public class BukkitBackend extends BackendPlatform {
    private void loadHologramDrivers() {
       HologramManager manager = this.api.getHologramManager();
       PluginManager pluginManager = Bukkit.getServer().getPluginManager();
-      Map<String, Supplier<Class<? extends HologramDriver>>> drivers = new HashMap();
-      drivers.put("CMI", (Supplier)() -> CMIModule.holograms.isEnabled() ? CMIHologramsImpl.class : null);
+      Map<String, Supplier<Class<? extends HologramDriver>>> drivers = new HashMap<>();
+      drivers.put("CMI", (Supplier)() -> CMIHologramsImpl.class);
       drivers.put("DecentHolograms", (Supplier)() -> DecentHologramsImpl.class);
       drivers.put("HolographicDisplays", (Supplier)() -> HolographicDisplaysImpl.class);
       drivers.put("FancyHolograms", (Supplier)() -> FancyHologramsImpl.class);
+      drivers.put("GDisplayHologram", (Supplier)() -> GDisplayHologramsImpl.class);
       drivers.forEach((plugin, provider) -> {
          if (pluginManager.isPluginEnabled(plugin)) {
             Class<? extends HologramDriver> driver = (Class)provider.get();

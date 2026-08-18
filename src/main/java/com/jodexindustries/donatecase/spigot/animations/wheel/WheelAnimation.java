@@ -21,7 +21,7 @@ import org.spongepowered.configurate.serialize.SerializationException;
 
 public class WheelAnimation extends BukkitJavaAnimation {
    private static final DCAPI api = DCAPI.getInstance();
-   private final List<ArmorStandCreator> armorStands = new ArrayList();
+   private final List<ArmorStandCreator> armorStands = new ArrayList<>();
    private WheelSettings settings;
 
    public void start() {
@@ -101,7 +101,7 @@ public class WheelAnimation extends BukkitJavaAnimation {
 
       private void initializeItems() {
          if (WheelAnimation.this.settings.wheelType == WheelSettings.WheelType.FULL) {
-            List<CaseDataItem> uniqueItems = new ArrayList(WheelAnimation.this.getCaseData().items().values());
+            List<CaseDataItem> uniqueItems = new ArrayList<>(WheelAnimation.this.getCaseData().items().values());
             if (WheelAnimation.this.settings.shuffle) {
                Collections.shuffle(uniqueItems);
             }
@@ -152,7 +152,7 @@ public class WheelAnimation extends BukkitJavaAnimation {
       private void spawnFlameEffect(double deltaX, double deltaY, double theta) {
          double dx = deltaX * Math.sin(theta);
          double dz = deltaX * Math.cos(theta);
-         this.world.spawnParticle(WheelAnimation.this.settings.flame.particle, this.bukkitLocation.clone().add(dx, deltaY, dz), 1, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, (Object)null);
+         this.world.spawnParticle(WheelAnimation.this.settings.flame.particle, this.bukkitLocation.clone().add(dx, deltaY, dz), 1, (double)0.0F, (double)0.0F, (double)0.0F, (double)0.0F, null);
       }
 
       private void moveArmorStands(double angle) {

@@ -36,7 +36,7 @@ final class SFUtils {
          InputStreamReader isr = new InputStreamReader(stream);
          JsonObject root = parse(isr);
          JsonArray textures = getTexturesObject(root);
-         List<TextureProperty> properties = new ArrayList(textures.size());
+         List<TextureProperty> properties = new ArrayList<>(textures.size());
 
          for(int i = 0; i < textures.size(); ++i) {
             JsonObject texture = textures.get(i).getAsJsonObject();

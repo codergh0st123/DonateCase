@@ -61,6 +61,6 @@ public class DeleteCommand extends DefaultCommand {
    }
 
    public List<String> getTabCompletions(@NotNull DCCommandSender sender, @NotNull String label, String[] args) {
-      return args.length == 1 ? new ArrayList(this.api.getConfigManager().getCaseStorage().get().keySet()) : new ArrayList();
+      return args.length == 1 ? new ArrayList<>(this.api.getConfigManager().getCaseStorage().get().keySet()) : new ArrayList<>();
    }
 }

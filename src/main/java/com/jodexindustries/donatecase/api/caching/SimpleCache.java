@@ -6,7 +6,7 @@ import lombok.Generated;
 import org.jetbrains.annotations.Nullable;
 
 public class SimpleCache<K, V> {
-   private final Map<K, CacheEntry<V>> cache = new HashMap();
+   private final Map<K, CacheEntry<V>> cache = new HashMap<>();
    private long maxAge;
 
    public SimpleCache(long maxAge) {

@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.jetbrains.annotations.NotNull;
 
 final class EventHandlerImpl implements EventHandler {
-   private final Map<Class<? extends EntityLibEvent>, Collection<EventCallback>> eventCallbacks = new ConcurrentHashMap();
+   private final Map<Class<? extends EntityLibEvent>, Collection<EventCallback>> eventCallbacks = new ConcurrentHashMap<>();
 
    public <T extends EntityLibEvent> void registerListener(EventListener<T> listener) {
       this.addEventCallback(listener.getEventClass(), EventListener.createEventCallback(listener));

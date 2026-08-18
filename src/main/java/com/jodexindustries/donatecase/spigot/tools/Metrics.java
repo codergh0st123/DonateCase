@@ -68,11 +68,10 @@ public class Metrics {
          isFolia = false;
       }
 
-      Consumer var10007 = this::appendPlatformData;
-      Consumer var10008 = this::appendServiceData;
-      Consumer var10009 = isFolia ? null : (submitDataTask) -> Bukkit.getScheduler().runTask(plugin, submitDataTask);
-      Objects.requireNonNull(plugin);
-      this.metricsBase = new MetricsBase("bukkit", serverUUID, serviceId, enabled, var10007, var10008, var10009, plugin::isEnabled, (message, error) -> this.plugin.getLogger().log(Level.WARNING, message, error), (message) -> this.plugin.getLogger().log(Level.INFO, message), logErrors, logSentData, logResponseStatusText, false);
+      Consumer<JsonObjectBuilder> appendPlatformData = this::appendPlatformData;
+      Consumer<JsonObjectBuilder> appendServiceData = this::appendServiceData;
+      Consumer<Runnable> submitTask = isFolia ? null : task -> Bukkit.getScheduler().runTask(plugin, task);
+      this.metricsBase = new MetricsBase("bukkit", serverUUID, serviceId, enabled, appendPlatformData, appendServiceData, submitTask, plugin::isEnabled, (message, error) -> this.plugin.getLogger().log(Level.WARNING, message, error), message -> this.plugin.getLogger().log(Level.INFO, message), logErrors, logSentData, logResponseStatusText, false);
    }
 
    public void shutdown() {
@@ -124,7 +123,7 @@ public class Metrics {
       private final boolean logErrors;
       private final boolean logSentData;
       private final boolean logResponseStatusText;
-      private final Set<CustomChart> customCharts = new HashSet();
+      private final Set<CustomChart> customCharts = new HashSet<>();
       private final boolean enabled;
 
       public MetricsBase(String platform, String serverUuid, int serviceId, boolean enabled, Consumer<JsonObjectBuilder> appendPlatformDataConsumer, Consumer<JsonObjectBuilder> appendServiceDataConsumer, Consumer<Runnable> submitTaskConsumer, Supplier<Boolean> checkServiceEnabledSupplier, BiConsumer<String, Throwable> errorLogger, Consumer<String> infoLogger, boolean logErrors, boolean logSentData, boolean logResponseStatusText, boolean skipRelocateCheck) {
@@ -365,7 +364,7 @@ public class Metrics {
                JsonObjectBuilder valueBuilder = new JsonObjectBuilder();
                boolean allSkipped = true;
 
-               for(Map.Entry<String, Integer> valueEntry : ((Map)map.get(entryValues.getKey())).entrySet()) {
+               for(Map.Entry<String, Integer> valueEntry : map.get(entryValues.getKey()).entrySet()) {
                   valueBuilder.appendField((String)valueEntry.getKey(), (Integer)valueEntry.getValue());
                   allSkipped = false;
                }

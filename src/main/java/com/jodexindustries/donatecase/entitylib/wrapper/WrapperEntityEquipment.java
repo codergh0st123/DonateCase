@@ -99,7 +99,7 @@ public class WrapperEntityEquipment {
    }
 
    public WrapperPlayServerEntityEquipment createPacket() {
-      List<Equipment> equipment = new ArrayList();
+      List<Equipment> equipment = new ArrayList<>();
 
       for(int i = 0; i < this.equipment.length; ++i) {
          ItemStack itemStack = this.equipment[i];

@@ -30,7 +30,7 @@ import javax.annotation.Nullable;
 import org.jetbrains.annotations.NotNull;
 
 public class AddonManagerImpl implements AddonManager {
-   private static final Map<String, InternalJavaAddon> addons = new ConcurrentHashMap();
+   private static final Map<String, InternalJavaAddon> addons = new ConcurrentHashMap<>();
    private static final List<InternalAddonClassLoader> loaders = new CopyOnWriteArrayList();
    private MutableGraph<String> dependencyGraph = GraphBuilder.directed().build();
    private final DCAPI api;
@@ -48,7 +48,7 @@ public class AddonManagerImpl implements AddonManager {
       if (addonsDir.exists() || addonsDir.mkdir()) {
          File[] files = addonsDir.listFiles();
          if (files != null) {
-            Map<String, InternalAddonDescription> descriptions = new HashMap();
+            Map<String, InternalAddonDescription> descriptions = new HashMap<>();
 
             for(File file : files) {
                if (file.isFile() && file.getName().endsWith(".jar")) {
@@ -94,9 +94,9 @@ public class AddonManagerImpl implements AddonManager {
    }
 
    private List<String> resolveLoadOrder() {
-      List<String> sorted = new ArrayList();
-      Set<String> visited = new HashSet();
-      Set<String> visiting = new HashSet();
+      List<String> sorted = new ArrayList<>();
+      Set<String> visited = new HashSet<>();
+      Set<String> visiting = new HashSet<>();
 
       for(String addon : this.dependencyGraph.nodes()) {
          if (!visited.contains(addon) && this.topologicalSort(addon, sorted, visited, visiting)) {
@@ -226,7 +226,7 @@ public class AddonManagerImpl implements AddonManager {
    }
 
    public void unload(PowerReason reason) {
-      for(InternalJavaAddon internalJavaAddon : new ArrayList(addons.values())) {
+      for(InternalJavaAddon internalJavaAddon : new ArrayList<>(addons.values())) {
          this.unload(internalJavaAddon, reason);
       }
 
@@ -263,7 +263,7 @@ public class AddonManagerImpl implements AddonManager {
 
    @Nullable
    public static InternalAddonClassLoader getAddonClassLoader(File file) {
-      return (InternalAddonClassLoader)loaders.stream().filter((loader) -> loader.getFile().equals(file)).findFirst().orElse((Object)null);
+      return (InternalAddonClassLoader)loaders.stream().filter((loader) -> loader.getFile().equals(file)).findFirst().orElse(null);
    }
 
    @Nullable

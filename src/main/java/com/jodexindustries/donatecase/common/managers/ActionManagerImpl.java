@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ActionManagerImpl implements ActionManager {
-   private static final Map<String, CaseAction> registeredActions = new ConcurrentHashMap();
+   private static final Map<String, CaseAction> registeredActions = new ConcurrentHashMap<>();
    private final DCAPI api;
    private final Platform platform;
 
@@ -48,7 +48,7 @@ public class ActionManagerImpl implements ActionManager {
    }
 
    public void unregister() {
-      List<String> list = new ArrayList(registeredActions.keySet());
+      List<String> list = new ArrayList<>(registeredActions.keySet());
       list.forEach(this::unregister);
    }
 

@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 public class ConcurrentWeakIdentityHashMap<K, V> implements ConcurrentMap<K, V> {
-   private final ConcurrentMap<WeakReference<K>, V> map = new ConcurrentHashMap();
+   private final ConcurrentMap<WeakReference<K>, V> map = new ConcurrentHashMap<>();
    private final ReferenceQueue<K> queue = new ReferenceQueue();
 
    public V putIfAbsent(K key, V value) {

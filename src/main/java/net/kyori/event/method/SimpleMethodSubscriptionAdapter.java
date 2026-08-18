@@ -59,7 +59,9 @@ public class SimpleMethodSubscriptionAdapter<E, L> implements MethodSubscription
 
             int postOrder = this.methodScanner.postOrder(listener, method);
             boolean consumeCancelled = this.methodScanner.consumeCancelledEvents(listener, method);
-            consumer.accept(methodParameterType, new MethodEventSubscriber(methodParameterType, method, executor, listener, postOrder, consumeCancelled));
+            @SuppressWarnings("unchecked")
+            Class<? extends E> eventType = (Class<? extends E>) methodParameterType;
+            consumer.accept(eventType, new MethodEventSubscriber(eventType, method, executor, listener, postOrder, consumeCancelled));
          }
       }
 

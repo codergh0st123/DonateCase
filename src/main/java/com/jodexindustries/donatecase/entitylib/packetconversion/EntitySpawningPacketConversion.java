@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class EntitySpawningPacketConversion {
-   private static Map<EntityType, EntitySpawningMethod> methods = new ConcurrentHashMap();
+   private static Map<EntityType, EntitySpawningMethod> methods = new ConcurrentHashMap<>();
 
    public PacketWrapper<?> getSpawnPacket(WrapperEntity entity) {
       EntityType type = entity.getEntityType();

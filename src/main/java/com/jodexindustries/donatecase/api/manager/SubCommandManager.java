@@ -15,7 +15,7 @@ public interface SubCommandManager {
    void unregister(String var1);
 
    default void unregister(Addon addon) {
-      List<SubCommand> list = new ArrayList(this.get(addon));
+      List<SubCommand> list = new ArrayList<>(this.get(addon));
       list.stream().map(SubCommand::name).forEach(this::unregister);
    }
 

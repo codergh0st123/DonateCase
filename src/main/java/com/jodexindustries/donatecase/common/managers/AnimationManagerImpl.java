@@ -32,9 +32,9 @@ import org.jetbrains.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurationNode;
 
 public class AnimationManagerImpl implements AnimationManager {
-   private static final Map<String, CaseAnimation> registeredAnimations = new ConcurrentHashMap();
-   private static final Map<UUID, ActiveCase> activeCases = new ConcurrentHashMap();
-   private static final Map<CaseLocation, List<UUID>> activeCasesByBlock = new ConcurrentHashMap();
+   private static final Map<String, CaseAnimation> registeredAnimations = new ConcurrentHashMap<>();
+   private static final Map<UUID, ActiveCase> activeCases = new ConcurrentHashMap<>();
+   private static final Map<CaseLocation, List<UUID>> activeCasesByBlock = new ConcurrentHashMap<>();
    private final DonateCase api;
    private final BackendPlatform backend;
 
@@ -64,7 +64,7 @@ public class AnimationManagerImpl implements AnimationManager {
    }
 
    public void unregister() {
-      List<String> list = new ArrayList(registeredAnimations.keySet());
+      List<String> list = new ArrayList<>(registeredAnimations.keySet());
       list.forEach(this::unregister);
    }
 
@@ -90,7 +90,7 @@ public class AnimationManagerImpl implements AnimationManager {
       CaseLocation temp = location.clone();
       CaseAnimation caseAnimation = this.get(animation);
       if (!this.validateStartConditions(data, caseAnimation, settings, temp, player)) {
-         return CompletableFuture.completedFuture((Object)null);
+         return CompletableFuture.completedFuture(null);
       } else {
          assert caseAnimation != null;
 
@@ -131,7 +131,7 @@ public class AnimationManagerImpl implements AnimationManager {
             activeCase.locked(caseAnimation.isRequireBlock());
             activeCase.keyRemoved(keyRemoved);
             activeCases.put(uuid, activeCase);
-            ((List)activeCasesByBlock.computeIfAbsent(temp, (k) -> new ArrayList())).add(uuid);
+            ((List)activeCasesByBlock.computeIfAbsent(temp, (k) -> new ArrayList<>())).add(uuid);
             this.api.getPlatform().getScheduler().run(this.backend, (Runnable)(() -> {
                try {
                   javaAnimation.start();
@@ -144,7 +144,7 @@ public class AnimationManagerImpl implements AnimationManager {
                   }
 
                   activeCases.remove(uuid);
-                  animationCompletion.complete((Object)null);
+                  animationCompletion.complete(null);
                }
 
             }), (long)delay);
@@ -154,7 +154,7 @@ public class AnimationManagerImpl implements AnimationManager {
                activeCasesByBlock.remove(location);
             }
 
-            animationCompletion.complete((Object)null);
+            animationCompletion.complete(null);
          }
 
          return animationCompletion;

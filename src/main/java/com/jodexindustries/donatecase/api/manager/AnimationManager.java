@@ -22,7 +22,7 @@ public interface AnimationManager {
    void unregister(@NotNull String var1);
 
    default void unregister(Addon addon) {
-      List<CaseAnimation> list = new ArrayList(this.get(addon));
+      List<CaseAnimation> list = new ArrayList<>(this.get(addon));
       list.stream().map(CaseAnimation::getName).forEach(this::unregister);
    }
 
@@ -55,8 +55,8 @@ public interface AnimationManager {
    Map<CaseLocation, List<UUID>> getActiveCasesByBlock();
 
    default List<ActiveCase> getActiveCasesByBlock(CaseLocation block) {
-      List<ActiveCase> activeCases = new ArrayList();
-      List<UUID> uuidList = (List)this.getActiveCasesByBlock().entrySet().stream().filter((entry) -> ((CaseLocation)entry.getKey()).equals(block)).findFirst().map(Map.Entry::getValue).orElse((Object)null);
+      List<ActiveCase> activeCases = new ArrayList<>();
+      List<UUID> uuidList = (List)this.getActiveCasesByBlock().entrySet().stream().filter((entry) -> ((CaseLocation)entry.getKey()).equals(block)).findFirst().map(Map.Entry::getValue).orElse(null);
       if (uuidList == null) {
          return activeCases;
       } else {

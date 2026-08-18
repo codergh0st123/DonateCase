@@ -13,7 +13,7 @@ import org.spongepowered.configurate.serialize.SerializationException;
 public class CasesMigrator_1_0_to_1_1 implements ConfigMigrator {
    public void migrate(Config config) throws SerializationException {
       ConfigurationNode root = config.node("DonateCase", "Cases");
-      Map<String, CaseInfo> cases = new HashMap();
+      Map<String, CaseInfo> cases = new HashMap<>();
 
       for(ConfigurationNode node : root.childrenMap().values()) {
          String key = String.valueOf(node.key());

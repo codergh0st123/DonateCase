@@ -25,7 +25,7 @@ public abstract class AbstractEntityLibAPI<P, T> implements EntityLibAPI<T> {
       this.platform = platform;
       this.packetEvents = settings.getPacketEvents();
       this.settings = settings;
-      this.tickContainers = (Collection<TickContainer<?, T>>)(settings.shouldTickTickables() ? new HashSet() : Collections.emptyList());
+      this.tickContainers = settings.shouldTickTickables() ? new HashSet<>() : Collections.emptyList();
    }
 
    public @Nullable WrapperEntity getEntity(int id) {

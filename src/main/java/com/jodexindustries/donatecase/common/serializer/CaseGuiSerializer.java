@@ -36,9 +36,9 @@ public class CaseGuiSerializer implements TypeSerializer<CaseGui> {
          DCAPI.getInstance().getPlatform().getLogger().warning("Wrong GUI size: " + size);
       }
 
-      Map<String, CaseGui.Item> itemMap = new HashMap();
+      Map<String, CaseGui.Item> itemMap = new HashMap<>();
       ConfigurationNode itemsNode = source.node(new Object[]{"Items"});
-      Set<Integer> slots = new HashSet();
+      Set<Integer> slots = new HashSet<>();
       if (itemsNode != null) {
          for(Map.Entry<Object, ? extends ConfigurationNode> entry : itemsNode.childrenMap().entrySet()) {
             CaseGui.Item item = this.loadGUIItem(String.valueOf(entry.getKey()), (ConfigurationNode)entry.getValue(), slots);
@@ -106,7 +106,7 @@ public class CaseGuiSerializer implements TypeSerializer<CaseGui> {
       }
 
       private List<Integer> getItemSlotsListed(ConfigurationNode itemSection) throws SerializationException {
-         List<Integer> slots = new ArrayList();
+         List<Integer> slots = new ArrayList<>();
          List<String> temp = itemSection.node(new Object[]{"Slots"}).getList(String.class);
          if (temp != null) {
             for(String slot : temp) {
@@ -132,7 +132,7 @@ public class CaseGuiSerializer implements TypeSerializer<CaseGui> {
             int range2 = slotArgs.length >= 2 ? Integer.parseInt(slotArgs[1]) : range1;
             return (List)IntStream.rangeClosed(range1, range2).boxed().collect(Collectors.toList());
          } else {
-            return new ArrayList();
+            return new ArrayList<>();
          }
       }
    }

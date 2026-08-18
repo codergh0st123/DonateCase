@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.ApiStatus.Internal;
 
 public class TickContainer<T extends Tickable, H> {
-   private final Set<T> tickables = new HashSet();
+   private final Set<T> tickables = new HashSet<>();
    private H handle;
 
    public @NotNull Collection<T> getTickables() {

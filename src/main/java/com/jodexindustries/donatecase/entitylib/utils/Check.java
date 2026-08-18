@@ -21,7 +21,7 @@ public final class Check {
    public static <T> void arrayLength(List<T> lines, int index, T e) {
       if (index >= lines.size()) {
          for(int i = lines.size(); i < index; ++i) {
-            lines.add((Object)null);
+            lines.add(null);
          }
 
          lines.add(e);

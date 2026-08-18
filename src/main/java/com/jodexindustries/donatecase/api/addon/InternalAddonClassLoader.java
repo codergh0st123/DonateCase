@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class InternalAddonClassLoader extends URLClassLoader {
-   private final Map<String, Class<?>> classes = new ConcurrentHashMap();
+   private final Map<String, Class<?>> classes = new ConcurrentHashMap<>();
    private final InternalAddonDescription description;
    private final File file;
    private final JarFile jar;

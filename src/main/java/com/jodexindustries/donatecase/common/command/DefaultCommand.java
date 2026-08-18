@@ -27,6 +27,6 @@ public abstract class DefaultCommand implements SubCommandExecutor, SubCommandTa
    }
 
    public List<String> getTabCompletions(@NotNull DCCommandSender sender, @NotNull String label, @NotNull String[] args) throws SubCommandException {
-      return new ArrayList();
+      return new ArrayList<>();
    }
 }

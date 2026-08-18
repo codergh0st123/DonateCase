@@ -80,7 +80,7 @@ public class CreateCommand extends DefaultCommand {
    }
 
    public List<String> getTabCompletions(@NotNull DCCommandSender sender, @NotNull String label, String[] args) {
-      List<String> list = new ArrayList(this.api.getCaseManager().getMap().keySet());
-      return (List<String>)(args.length >= 2 ? new ArrayList() : list);
+      List<String> list = new ArrayList<>(this.api.getCaseManager().getMap().keySet());
+      return (List<String>)(args.length >= 2 ? new ArrayList<>() : list);
    }
 }

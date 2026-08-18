@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class SubCommandManagerImpl implements SubCommandManager {
    private static final List<? extends Class<? extends DefaultCommand>> defaultCommands = Arrays.asList(AddonCommand.class, AddonsCommand.class, CasesCommand.class, CreateCommand.class, DeleteCommand.class, DelKeyCommand.class, GiveKeyCommand.class, HelpCommand.class, KeysCommand.class, OpenCaseCommand.class, RegistryCommand.class, ReloadCommand.class, SetKeyCommand.class);
-   private static final Map<String, SubCommand> registeredSubCommands = new ConcurrentHashMap();
+   private static final Map<String, SubCommand> registeredSubCommands = new ConcurrentHashMap<>();
    private final DCAPI api;
    private final Platform platform;
 
@@ -58,7 +58,7 @@ public class SubCommandManagerImpl implements SubCommandManager {
    }
 
    public void unregister() {
-      List<String> list = new ArrayList(registeredSubCommands.keySet());
+      List<String> list = new ArrayList<>(registeredSubCommands.keySet());
       list.forEach(this::unregister);
    }
 

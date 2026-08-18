@@ -30,7 +30,7 @@ public class PopAnimation extends BukkitJavaAnimation {
          throw new RuntimeException("Error with parsing animation settings", e);
       }
 
-      List<Pair<ArmorStandCreator, CaseLocation>> asList = new ArrayList();
+      List<Pair<ArmorStandCreator, CaseLocation>> asList = new ArrayList<>();
       double origX = this.getLocation().x() + (double)0.5F;
       double origY = this.getLocation().y() - (double)0.5F;
       double origZ = this.getLocation().z() + (double)0.5F;
@@ -71,7 +71,7 @@ public class PopAnimation extends BukkitJavaAnimation {
       private final CaseLocation location;
       private final List<Pair<ArmorStandCreator, CaseLocation>> asList;
       private final World world;
-      private final List<Integer> indexes = new ArrayList(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
+      private final List<Integer> indexes = new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
       private int randomIndex;
 
       public Task(final List<Pair<ArmorStandCreator, CaseLocation>> asList, CaseLocation location) {

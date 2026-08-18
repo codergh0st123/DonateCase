@@ -19,8 +19,8 @@ import org.jetbrains.annotations.Nullable;
 public class Metadata {
    private final int entityId;
    private volatile boolean notifyAboutChanges = true;
-   private final Map<Byte, EntityData> notNotifiedChanges = new HashMap();
-   private final Map<Byte, EntityData> metadataMap = new ConcurrentHashMap();
+   private final Map<Byte, EntityData> notNotifiedChanges = new HashMap<>();
+   private final Map<Byte, EntityData> metadataMap = new ConcurrentHashMap<>();
 
    public Metadata(int entityId) {
       this.entityId = entityId;
@@ -56,7 +56,7 @@ public class Metadata {
          synchronized(this.notNotifiedChanges) {
             this.notifyAboutChanges = notifyAboutChanges;
             if (notifyAboutChanges) {
-               entries = new ArrayList(this.notNotifiedChanges.values());
+               entries = new ArrayList<>(this.notNotifiedChanges.values());
                if (entries.isEmpty()) {
                   return;
                }
@@ -85,7 +85,7 @@ public class Metadata {
    }
 
    @NotNull List<EntityData> getEntries() {
-      return Collections.unmodifiableList(new ArrayList(this.metadataMap.values()));
+      return Collections.unmodifiableList(new ArrayList<>(this.metadataMap.values()));
    }
 
    public WrapperPlayServerEntityMetadata createPacket() {

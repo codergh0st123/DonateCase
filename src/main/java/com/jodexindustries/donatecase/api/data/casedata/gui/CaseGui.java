@@ -25,7 +25,7 @@ public class CaseGui implements Cloneable {
    }
 
    private Map<String, Item> cloneItemsMap(Map<String, Item> originalMap) {
-      Map<String, Item> clonedMap = new HashMap();
+      Map<String, Item> clonedMap = new HashMap<>();
 
       for(Map.Entry<String, Item> entry : originalMap.entrySet()) {
          clonedMap.put((String)entry.getKey(), ((Item)entry.getValue()).clone());

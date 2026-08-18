@@ -15,10 +15,13 @@ import java.util.function.Predicate;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 final class SubscriberRegistry<E> {
-   private static final LoadingCache<Class<?>, Set<Class<?>>> CLASS_HIERARCHY = CacheBuilder.newBuilder().weakKeys().build(CacheLoader.from((key) -> TypeToken.of(key).getTypes().rawTypes()));
+   @SuppressWarnings("unchecked")
+   private static final LoadingCache<Class<?>, Set<Class<?>>> CLASS_HIERARCHY = CacheBuilder.newBuilder().weakKeys().build(
+           CacheLoader.from((Class<?> key) -> (Set<Class<?>>) (Set<?>) TypeToken.of(key).getTypes().rawTypes())
+   );
    private final SetMultimap<Class<?>, EventSubscriber<?>> subscribers = HashMultimap.create();
    private final LoadingCache<Class<?>, List<EventSubscriber<?>>> cache = CacheBuilder.newBuilder().initialCapacity(85).build(CacheLoader.from((eventClass) -> {
-      List<EventSubscriber<?>> subscribers = new ArrayList();
+      List<EventSubscriber<?>> subscribers = new ArrayList<>();
       Set<? extends Class<?>> types = (Set)CLASS_HIERARCHY.getUnchecked(eventClass);
 
       assert types != null;

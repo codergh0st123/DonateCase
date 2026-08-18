@@ -15,7 +15,7 @@ public class EndermanMeta extends MobMeta {
    }
 
    public Integer getCarriedBlockID() {
-      return (Integer)super.metadata.getIndex((byte)16, (Object)null);
+      return (Integer)super.metadata.getIndex((byte)16, null);
    }
 
    public void setCarriedBlockID(@Nullable Integer value) {

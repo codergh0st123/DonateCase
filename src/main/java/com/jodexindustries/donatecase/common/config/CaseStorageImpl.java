@@ -61,7 +61,7 @@ public class CaseStorageImpl implements CaseStorage {
    }
 
    public @NotNull Map<String, CaseInfo> get() {
-      Map<String, CaseInfo> map = new HashMap();
+      Map<String, CaseInfo> map = new HashMap<>();
       ConfigurationNode parent = this.config.node("DonateCase", "Cases");
 
       for(Map.Entry<Object, ? extends ConfigurationNode> entry : parent.childrenMap().entrySet()) {

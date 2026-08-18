@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 public abstract class BackendScheduler implements Scheduler {
-   protected final ConcurrentMap<Integer, SchedulerTask> tasks = new ConcurrentHashMap();
+   protected final ConcurrentMap<Integer, SchedulerTask> tasks = new ConcurrentHashMap<>();
 
    protected void add(SchedulerTask task) {
       this.tasks.put(task.getTaskId(), task);

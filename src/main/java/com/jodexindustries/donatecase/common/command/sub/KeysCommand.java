@@ -88,6 +88,6 @@ public class KeysCommand extends DefaultCommand {
    }
 
    public List<String> getTabCompletions(@NotNull DCCommandSender sender, @NotNull String label, String[] args) {
-      return (List<String>)(args.length == 1 && sender.hasPermission("donatecase.mod") ? (List)Arrays.stream(this.api.getPlatform().getOnlinePlayers()).map(DCPlayer::getName).filter((px) -> px.startsWith(args[0])).collect(Collectors.toList()) : new ArrayList());
+      return (List<String>)(args.length == 1 && sender.hasPermission("donatecase.mod") ? (List)Arrays.stream(this.api.getPlatform().getOnlinePlayers()).map(DCPlayer::getName).filter((px) -> px.startsWith(args[0])).collect(Collectors.toList()) : new ArrayList<>());
    }
 }

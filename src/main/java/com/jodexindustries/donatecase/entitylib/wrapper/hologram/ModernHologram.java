@@ -20,7 +20,7 @@ final class ModernHologram implements Hologram.Modern {
    private boolean spawned;
 
    ModernHologram(@NotNull Location location) {
-      this.lines = new ArrayList(3);
+      this.lines = new ArrayList<>(3);
       this.spawned = false;
       this.location = location;
    }

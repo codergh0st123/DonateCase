@@ -38,7 +38,7 @@ public final class ExtraConversionUtil {
             Object texture = textures.iterator().next();
             String value = (String)texture.getClass().getDeclaredMethod("value").invoke(texture);
             String signature = (String)texture.getClass().getDeclaredMethod("signature").invoke(texture);
-            ArrayList<TextureProperty> t = new ArrayList();
+            ArrayList<TextureProperty> t = new ArrayList<>();
             t.add(new TextureProperty("textures", value, signature));
             return new UserProfile(player.getUniqueId(), player.getName(), t);
          } else {

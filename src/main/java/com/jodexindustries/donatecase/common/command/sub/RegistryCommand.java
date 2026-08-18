@@ -51,7 +51,7 @@ public class RegistryCommand extends DefaultCommand {
    }
 
    public List<String> getTabCompletions(@NotNull DCCommandSender sender, @NotNull String label, @NotNull String[] args) {
-      List<String> value = new ArrayList();
+      List<String> value = new ArrayList<>();
       if (args.length == 1) {
          value.add("animations");
          value.add("materials");
@@ -73,7 +73,7 @@ public class RegistryCommand extends DefaultCommand {
       for(Map.Entry<String, List<CaseAnimation>> entry : animationsMap.entrySet()) {
          sender.sendMessage(DCTools.rc("&6" + (String)entry.getKey()));
 
-         for(CaseAnimation animation : (List)entry.getValue()) {
+         for(CaseAnimation animation : entry.getValue()) {
             sender.sendMessage(DCTools.rc("&9- &a" + animation.getName() + " &3- &2" + animation.getDescription()));
          }
       }
@@ -81,10 +81,10 @@ public class RegistryCommand extends DefaultCommand {
    }
 
    private Map<String, List<CaseAnimation>> buildAnimationsMap() {
-      Map<String, List<CaseAnimation>> animationsMap = new HashMap();
+      Map<String, List<CaseAnimation>> animationsMap = new HashMap<>();
       this.api.getAnimationManager().getMap().forEach((animationName, caseAnimation) -> {
          String addon = caseAnimation.getAddon().getName();
-         List<CaseAnimation> animations = (List)animationsMap.getOrDefault(addon, new ArrayList());
+         List<CaseAnimation> animations = animationsMap.getOrDefault(addon, new ArrayList<>());
          animations.add(caseAnimation);
          animationsMap.put(addon, animations);
       });
@@ -97,7 +97,7 @@ public class RegistryCommand extends DefaultCommand {
       for(Map.Entry<String, List<CaseMaterial>> entry : materialsMap.entrySet()) {
          sender.sendMessage(DCTools.rc("&6" + (String)entry.getKey()));
 
-         for(CaseMaterial material : (List)entry.getValue()) {
+         for(CaseMaterial material : entry.getValue()) {
             sender.sendMessage(DCTools.rc("&9- &a" + material.id() + " &3- &2" + material.description()));
          }
       }
@@ -105,10 +105,10 @@ public class RegistryCommand extends DefaultCommand {
    }
 
    private Map<String, List<CaseMaterial>> buildMaterialsMap() {
-      Map<String, List<CaseMaterial>> materialsMap = new HashMap();
+      Map<String, List<CaseMaterial>> materialsMap = new HashMap<>();
       this.api.getMaterialManager().getMap().forEach((name, caseMaterial) -> {
          String addon = caseMaterial.addon().getName();
-         List<CaseMaterial> materials = (List)materialsMap.getOrDefault(addon, new ArrayList());
+         List<CaseMaterial> materials = materialsMap.getOrDefault(addon, new ArrayList<>());
          materials.add(caseMaterial);
          materialsMap.put(addon, materials);
       });
@@ -121,7 +121,7 @@ public class RegistryCommand extends DefaultCommand {
       for(Map.Entry<String, List<CaseAction>> entry : actionsMap.entrySet()) {
          sender.sendMessage(DCTools.rc("&6" + (String)entry.getKey()));
 
-         for(CaseAction action : (List)entry.getValue()) {
+         for(CaseAction action : entry.getValue()) {
             sender.sendMessage(DCTools.rc("&9- &a" + action.name() + " &3- &2" + action.description()));
          }
       }
@@ -129,10 +129,10 @@ public class RegistryCommand extends DefaultCommand {
    }
 
    private Map<String, List<CaseAction>> buildActionsMap() {
-      Map<String, List<CaseAction>> actionsMap = new HashMap();
+      Map<String, List<CaseAction>> actionsMap = new HashMap<>();
       this.api.getActionManager().getMap().forEach((name, caseAction) -> {
          String addon = caseAction.addon().getName();
-         List<CaseAction> actions = (List)actionsMap.getOrDefault(addon, new ArrayList());
+         List<CaseAction> actions = actionsMap.getOrDefault(addon, new ArrayList<>());
          actions.add(caseAction);
          actionsMap.put(addon, actions);
       });
@@ -145,7 +145,7 @@ public class RegistryCommand extends DefaultCommand {
       for(Map.Entry<String, List<TypedItem>> entry : guitypeditemsMap.entrySet()) {
          sender.sendMessage(DCTools.rc("&6" + (String)entry.getKey()));
 
-         for(TypedItem typedItem : (List)entry.getValue()) {
+         for(TypedItem typedItem : entry.getValue()) {
             sender.sendMessage(DCTools.rc("&9- &a" + typedItem.id() + " &3- &2" + typedItem.description()));
          }
       }
@@ -153,10 +153,10 @@ public class RegistryCommand extends DefaultCommand {
    }
 
    private Map<String, List<TypedItem>> buildGuiTypedItemsMap() {
-      Map<String, List<TypedItem>> guiTypedItemsMap = new HashMap();
+      Map<String, List<TypedItem>> guiTypedItemsMap = new HashMap<>();
       this.api.getGuiTypedItemManager().getMap().forEach((name, guiTypedItem) -> {
          String addon = guiTypedItem.addon().getName();
-         List<TypedItem> actions = (List)guiTypedItemsMap.getOrDefault(addon, new ArrayList());
+         List<TypedItem> actions = (List)guiTypedItemsMap.getOrDefault(addon, new ArrayList<>());
          actions.add(guiTypedItem);
          guiTypedItemsMap.put(addon, actions);
       });

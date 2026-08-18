@@ -21,7 +21,7 @@ public class ConfigManagerImpl implements ConfigManager {
    private final MessagesImpl messages;
    private final CaseStorageImpl caseStorage;
    private final ConfigConverter converter;
-   private final Map<String, ConfigImpl> configurations = new HashMap();
+   private final Map<String, ConfigImpl> configurations = new HashMap<>();
    private static final String[] defaultFiles = new String[]{"Config.yml", "Cases.yml", "Animations.yml"};
    private final BackendPlatform platform;
 

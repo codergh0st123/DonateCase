@@ -46,7 +46,7 @@ public class CaseData implements Cloneable {
    }
 
    public @Nullable CaseDataItem getItem(String name) {
-      return (CaseDataItem)this.items.getOrDefault(name, (Object)null);
+      return (CaseDataItem)this.items.getOrDefault(name, null);
    }
 
    public CaseDataItem getRandomItem() {
@@ -88,7 +88,7 @@ public class CaseData implements Cloneable {
    }
 
    protected static Map<String, CaseDataItem> cloneItemsMap(Map<String, CaseDataItem> originalMap) {
-      Map<String, CaseDataItem> clonedMap = new HashMap();
+      Map<String, CaseDataItem> clonedMap = new HashMap<>();
 
       for(Map.Entry<String, CaseDataItem> entry : originalMap.entrySet()) {
          clonedMap.put((String)entry.getKey(), ((CaseDataItem)entry.getValue()).clone());

@@ -20,7 +20,7 @@ final class LegacyHologram implements Hologram.Legacy {
    private boolean marker;
 
    LegacyHologram(@NotNull Location location) {
-      this.lines = new ArrayList(3);
+      this.lines = new ArrayList<>(3);
       this.lineOffset = -0.9875F;
       this.markerOffset = -0.40625F;
       this.location = location;

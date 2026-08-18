@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class EntityMeta implements EntityMetadataProvider {
    private static final MetaConverterRegistry registry = new MetaConverterRegistry();
-   private static final Map<Integer, EntityMeta> metaMap = new ConcurrentHashMap();
+   private static final Map<Integer, EntityMeta> metaMap = new ConcurrentHashMap<>();
    public static final byte OFFSET = 0;
    public static final byte MAX_OFFSET = 8;
    private static final byte ON_FIRE_BIT = 1;
@@ -144,7 +144,7 @@ public class EntityMeta implements EntityMetadataProvider {
 
    public Component getCustomName() {
       Optional<Component> component = (Optional)this.metadata.getIndex(MetaOffsetConverter.EntityMetaOffsets.customNameOffset(), Optional.empty());
-      return (Component)component.orElse((Object)null);
+      return (Component)component.orElse(null);
    }
 
    public void setCustomName(Component value) {

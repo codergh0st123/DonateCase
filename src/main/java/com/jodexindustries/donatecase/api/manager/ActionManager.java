@@ -20,7 +20,7 @@ public interface ActionManager {
    void unregister(@NotNull String var1);
 
    default void unregister(Addon addon) {
-      List<CaseAction> list = new ArrayList(this.get(addon));
+      List<CaseAction> list = new ArrayList<>(this.get(addon));
       list.stream().map(CaseAction::name).forEach(this::unregister);
    }
 
@@ -35,15 +35,13 @@ public interface ActionManager {
    }
 
    default List<CaseAction> get(Addon addon) {
-      return (List)this.getMap().values().stream().filter((action) -> action.addon().equals(addon)).collect(Collectors.toList());
+      return this.getMap().values().stream().filter((action) -> action.addon().equals(addon)).collect(Collectors.toList());
    }
 
    @NotNull Map<String, CaseAction> getMap();
 
    default Optional<String> getByStart(@NotNull String prefix) {
-      Stream var10000 = this.getMap().keySet().stream();
-      Objects.requireNonNull(prefix);
-      return var10000.filter(prefix::startsWith).sorted().findFirst();
+      return this.getMap().keySet().stream().filter(name -> name.startsWith(prefix)).sorted().findFirst();
    }
 
    void execute(@Nullable DCPlayer var1, @NotNull String var2, int var3);

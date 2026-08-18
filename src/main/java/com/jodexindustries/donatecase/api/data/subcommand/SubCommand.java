@@ -23,7 +23,7 @@ public final class SubCommand implements SubCommandExecutor, SubCommandTabComple
    }
 
    public List<String> getTabCompletions(@NotNull DCCommandSender sender, @NotNull String label, @NotNull String[] args) throws SubCommandException {
-      return (List<String>)(this.tabCompleter == null ? new ArrayList() : this.tabCompleter.getTabCompletions(sender, label, args));
+      return (List<String>)(this.tabCompleter == null ? new ArrayList<>() : this.tabCompleter.getTabCompletions(sender, label, args));
    }
 
    @Generated

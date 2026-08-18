@@ -20,18 +20,18 @@ public class LocalPlaceholder extends Placeholder {
    }
 
    public static Set<LocalPlaceholder> of(CaseData caseData) {
-      return new HashSet(Arrays.asList(of("%casetype%", caseData.caseType()), of("%casename%", caseData.caseType()), of("%casedisplayname%", caseData.caseDisplayName()), of("%casetitle%", caseData.caseGui().title()), of("%animation%", caseData.animation())));
+      return new HashSet<>(Arrays.asList(of("%casetype%", caseData.caseType()), of("%casename%", caseData.caseType()), of("%casedisplayname%", caseData.caseDisplayName()), of("%casetitle%", caseData.caseGui().title()), of("%animation%", caseData.animation())));
    }
 
    public static Set<LocalPlaceholder> of(CaseDataItem item) {
-      return new HashSet(Arrays.asList(of("%group%", item.group()), of("%groupdisplayname%", item.material().displayName())));
+      return new HashSet<>(Arrays.asList(of("%group%", item.group()), of("%groupdisplayname%", item.material().displayName())));
    }
 
    public static Set<LocalPlaceholder> of(CaseData.History data) {
       String time = DCTools.getDateFormat().format(new Date(data.time()));
       String group = data.group();
       String action = data.action() != null ? data.action() : group;
-      return new HashSet(Arrays.asList(of("%group%", group), of("%action%", action), of("%player%", data.playerName()), of("%casetype%", data.caseType()), of("%casename%", data.caseType()), of("%time%", time)));
+      return new HashSet<>(Arrays.asList(of("%group%", group), of("%action%", action), of("%player%", data.playerName()), of("%casetype%", data.caseType()), of("%casename%", data.caseType()), of("%time%", time)));
    }
 
    public boolean equals(Object object) {

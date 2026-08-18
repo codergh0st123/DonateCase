@@ -36,9 +36,9 @@ public class MessagesImpl implements Messages {
 
    public @NotNull List<String> getStringList(@NotNull String path) {
       try {
-         return this.config.node(path).getList(String.class, new ArrayList());
+         return this.config.node(path).getList(String.class, new ArrayList<>());
       } catch (SerializationException var3) {
-         return new ArrayList();
+         return new ArrayList<>();
       }
    }
 

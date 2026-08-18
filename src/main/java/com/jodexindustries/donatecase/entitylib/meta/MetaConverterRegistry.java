@@ -125,8 +125,8 @@ import java.util.function.BiFunction;
 import org.jetbrains.annotations.NotNull;
 
 final class MetaConverterRegistry {
-   private final Map<EntityType, BiFunction<Integer, Metadata, EntityMeta>> converters = new HashMap();
-   private final Map<EntityType, Class<? extends EntityMeta>> metaClasses = new HashMap();
+   private final Map<EntityType, BiFunction<Integer, Metadata, EntityMeta>> converters = new HashMap<>();
+   private final Map<EntityType, Class<? extends EntityMeta>> metaClasses = new HashMap<>();
 
    MetaConverterRegistry() {
       this.put(EntityTypes.ABSTRACT_WIND_CHARGE, SmallFireballMeta.class, SmallFireballMeta::new);

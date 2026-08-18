@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public interface ArmorStandCreator {
-   Map<Integer, ArmorStandCreator> armorStands = new HashMap();
+   Map<Integer, ArmorStandCreator> armorStands = new HashMap<>();
 
    void setVisible(boolean var1);
 

@@ -38,14 +38,14 @@ public class RainlyAnimation extends BukkitJavaAnimation {
          as.setSmall(small);
          as.spawn();
          api.getPlatform().getScheduler().run(api.getPlatform(), (Consumer)(new Task(as, particle)), 0L, 2L);
-      } catch (Throwable $ex) {
-         throw $ex;
+      } catch (Exception exception) {
+         throw new IllegalStateException("Не удалось запустить анимацию RAINLY.", exception);
       }
    }
 
    private class Task implements Consumer<SchedulerTask> {
       private int i = 0;
-      private final List<Location> clouds = new ArrayList();
+      private final List<Location> clouds = new ArrayList<>();
       private final Location bukkitLocation;
       private final CaseLocation location;
       private final Particle particle;

@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class GUITypedItemManagerImpl implements GUITypedItemManager {
-   private static final Map<String, TypedItem> registeredItems = new ConcurrentHashMap();
+   private static final Map<String, TypedItem> registeredItems = new ConcurrentHashMap<>();
    private final Platform platform;
 
    public GUITypedItemManagerImpl(DCAPI api) {
@@ -41,7 +41,7 @@ public class GUITypedItemManagerImpl implements GUITypedItemManager {
    }
 
    public void unregister() {
-      List<String> items = new ArrayList(registeredItems.keySet());
+      List<String> items = new ArrayList<>(registeredItems.keySet());
       items.forEach(this::unregister);
    }
 

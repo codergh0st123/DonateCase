@@ -19,7 +19,7 @@ public class FireworkSettings {
    @Setting("Power")
    public int power;
    @Setting("FireworkColors")
-   public List<String> fireworkColors = new ArrayList();
+   public List<String> fireworkColors = new ArrayList<>();
    @Setting("ItemSlot")
    public EquipmentSlot itemSlot;
    @Setting("Scroll")

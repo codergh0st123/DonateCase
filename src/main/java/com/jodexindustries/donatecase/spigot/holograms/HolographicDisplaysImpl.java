@@ -7,36 +7,55 @@ import com.jodexindustries.donatecase.api.data.storage.CaseLocation;
 import com.jodexindustries.donatecase.api.tools.DCTools;
 import com.jodexindustries.donatecase.spigot.BukkitBackend;
 import com.jodexindustries.donatecase.spigot.tools.BukkitUtils;
+import com.jodexindustries.donatecase.spigot.tools.OptionalPluginApi;
+
 import java.util.HashMap;
-import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
-import me.filoghost.holographicdisplays.api.hologram.Hologram;
-import me.filoghost.holographicdisplays.api.hologram.PlaceholderSetting;
-import org.jetbrains.annotations.NotNull;
+import java.util.Map;
 
 public class HolographicDisplaysImpl implements HologramDriver {
-   private final @NotNull HolographicDisplaysAPI api = HolographicDisplaysAPI.get(((BukkitBackend)DCAPI.getInstance().getPlatform()).getPlugin());
-   private final HashMap<CaseLocation, Hologram> holograms = new HashMap();
 
-   public void create(CaseLocation block, CaseData.Hologram caseHologram) {
-      if (caseHologram.enabled()) {
-         double height = caseHologram.height();
-         Hologram hologram = this.api.createHologram(BukkitUtils.toBukkit(block).add((double)0.5F, height, (double)0.5F));
-         hologram.setPlaceholderSetting(PlaceholderSetting.DEFAULT);
-         caseHologram.messages().forEach((line) -> hologram.getLines().appendText(DCTools.rc(line)));
-         this.holograms.put(block, hologram);
-      }
-   }
+    private final Map<CaseLocation, Object> holograms = new HashMap<>();
 
-   public void remove(CaseLocation block) {
-      if (this.holograms.containsKey(block)) {
-         Hologram hologram = (Hologram)this.holograms.get(block);
-         this.holograms.remove(block);
-         hologram.delete();
-      }
-   }
+    @Override
+    public void create(CaseLocation block, CaseData.Hologram caseHologram) {
+        if (!caseHologram.enabled()) {
+            return;
+        }
 
-   public void remove() {
-      this.holograms.values().forEach(Hologram::delete);
-      this.holograms.clear();
-   }
+        BukkitBackend backend = (BukkitBackend) DCAPI.getInstance().getPlatform();
+        Object api = OptionalPluginApi.invokeStatic(
+                "me.filoghost.holographicdisplays.api.HolographicDisplaysAPI",
+                "get",
+                backend.getPlugin()
+        );
+        Object hologram = OptionalPluginApi.invoke(
+                api,
+                "createHologram",
+                BukkitUtils.toBukkit(block).add(0.5D, caseHologram.height(), 0.5D)
+        );
+
+        if (hologram == null) {
+            return;
+        }
+
+        Object lines = OptionalPluginApi.invoke(hologram, "getLines");
+
+        for (String message : caseHologram.messages()) {
+            OptionalPluginApi.invoke(lines, "appendText", DCTools.rc(message));
+        }
+
+        holograms.put(block, hologram);
+    }
+
+    @Override
+    public void remove(CaseLocation block) {
+        Object hologram = holograms.remove(block);
+        OptionalPluginApi.invoke(hologram, "delete");
+    }
+
+    @Override
+    public void remove() {
+        holograms.values().forEach(hologram -> OptionalPluginApi.invoke(hologram, "delete"));
+        holograms.clear();
+    }
 }

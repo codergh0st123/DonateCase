@@ -24,7 +24,7 @@ public class ZombieVillagerMeta extends ZombieMeta {
    }
 
    public VillagerData getVillagerData() {
-      int[] data = (int[])super.metadata.getIndex(offset((byte)19, 1), (Object)null);
+      int[] data = (int[])super.metadata.getIndex(offset((byte)19, 1), null);
       return data == null ? new VillagerData(VillagerTypes.PLAINS, VillagerProfessions.NONE, VillagerMeta.Level.NOVICE.ordinal()) : new VillagerData(VillagerMeta.TYPES[data[0]], VillagerMeta.PROFESSIONS[data[1]], VillagerMeta.Level.VALUES[data[2] - 1].ordinal());
    }
 

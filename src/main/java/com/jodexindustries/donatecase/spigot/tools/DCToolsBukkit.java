@@ -22,7 +22,7 @@ public abstract class DCToolsBukkit extends DCTools {
       for(Field field : fields) {
          if (Modifier.isStatic(field.getModifiers()) && field.getType() == Color.class && field.getName().equalsIgnoreCase(color)) {
             try {
-               return (Color)field.get((Object)null);
+               return (Color)field.get(null);
             } catch (IllegalAccessException | IllegalArgumentException e1) {
                throw new RuntimeException(e1);
             }
