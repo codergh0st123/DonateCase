@@ -14,6 +14,7 @@ import java.util.function.Consumer;
 import lombok.Generated;
 import org.bukkit.Location;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.serialize.SerializationException;
@@ -113,7 +114,11 @@ public class SelectAnimation extends BukkitJavaAnimation {
                int index = random.nextInt(this.asList.size());
                this.randomAS = (Pair)this.asList.get(index);
                this.asList.remove(index);
-               this.toDelete.add(this.randomAS.fst);
+               ArmorStandCreator as = (ArmorStandCreator)this.randomAS.fst;
+               this.toDelete.add(as);
+               if ("BOX_SELECT".equalsIgnoreCase(SelectAnimation.this.getCaseData().animation())) {
+                  this.world.playSound(new Location(this.world, as.getLocation().x(), as.getLocation().y(), as.getLocation().z()), Sound.MUSIC_DISC_CAT, 1.0F, 1.0F);
+               }
             }
 
             if (this.randomAS != null) {
