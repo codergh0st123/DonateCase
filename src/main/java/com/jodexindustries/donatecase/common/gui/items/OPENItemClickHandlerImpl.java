@@ -13,6 +13,7 @@ import com.jodexindustries.donatecase.api.event.player.PreOpenCaseEvent;
 import com.jodexindustries.donatecase.api.platform.DCPlayer;
 import com.jodexindustries.donatecase.spigot.tools.BukkitUtils;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ThreadLocalRandom;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -91,7 +92,8 @@ public class OPENItemClickHandlerImpl implements TypedItemClickHandler {
          direction = bukkitPlayer.getLocation().getDirection().multiply(-1.0D).setY(0.0D);
       }
 
-      bukkitPlayer.setVelocity(direction.normalize().multiply(100.0D).setY(0.25D));
+      double distance = ThreadLocalRandom.current().nextDouble(1.0D, 2.0D);
+      bukkitPlayer.setVelocity(direction.normalize().multiply(distance).setY(0.25D));
    }
 
    private static CompletableFuture<Boolean> checkKeys(PreOpenCaseEvent event) {
