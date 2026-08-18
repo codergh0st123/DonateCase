@@ -1,0 +1,24 @@
+package com.jodexindustries.donatecase.entitylib.meta.mobs.monster;
+
+import com.github.retrooper.packetevents.protocol.entity.data.EntityDataTypes;
+import com.jodexindustries.donatecase.entitylib.meta.Metadata;
+import com.jodexindustries.donatecase.entitylib.meta.types.MobMeta;
+
+public class ZoglinMeta extends MobMeta {
+   public static final byte OFFSET = 16;
+   public static final byte MAX_OFFSET = 17;
+
+   public ZoglinMeta(int entityId, Metadata metadata) {
+      super(entityId, metadata);
+   }
+
+   public boolean isBaby() {
+      return (Boolean)super.metadata.getIndex((byte)16, false);
+   }
+
+   public void setBaby(boolean value) {
+      if (this.isBaby() != value) {
+         super.metadata.setIndex((byte)16, EntityDataTypes.BOOLEAN, value);
+      }
+   }
+}

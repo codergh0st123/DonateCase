@@ -1,0 +1,139 @@
+package com.jodexindustries.donatecase.common.serializer;
+
+import com.jodexindustries.donatecase.api.DCAPI;
+import com.jodexindustries.donatecase.api.data.casedata.CaseDataMaterial;
+import com.jodexindustries.donatecase.api.data.casedata.gui.CaseGui;
+import com.jodexindustries.donatecase.api.data.casedata.gui.typeditem.TypedItem;
+import com.jodexindustries.donatecase.api.tools.DCTools;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.SerializationException;
+import org.spongepowered.configurate.serialize.TypeSerializer;
+
+public class CaseGuiSerializer implements TypeSerializer<CaseGui> {
+   public CaseGui deserialize(Type type, ConfigurationNode source) throws SerializationException {
+      CaseGui caseGui = new CaseGui();
+      String title = source.node(new Object[]{"Title"}).getString();
+      int updateRate = source.node(new Object[]{"UpdateRate"}).getInt();
+      int size = source.node(new Object[]{"Size"}).getInt();
+      caseGui.title(title);
+      caseGui.updateRate(updateRate);
+      caseGui.size(size);
+      if (!DCTools.isValidGuiSize(size)) {
+         caseGui.size(54);
+         DCAPI.getInstance().getPlatform().getLogger().warning("Wrong GUI size: " + size);
+      }
+
+      Map<String, CaseGui.Item> itemMap = new HashMap();
+      ConfigurationNode itemsNode = source.node(new Object[]{"Items"});
+      Set<Integer> slots = new HashSet();
+      if (itemsNode != null) {
+         for(Map.Entry<Object, ? extends ConfigurationNode> entry : itemsNode.childrenMap().entrySet()) {
+            CaseGui.Item item = this.loadGUIItem(String.valueOf(entry.getKey()), (ConfigurationNode)entry.getValue(), slots);
+            if (item != null) {
+               itemMap.put((String)item.node().key(), item);
+            }
+         }
+      }
+
+      caseGui.items(itemMap);
+      return caseGui;
+   }
+
+   public void serialize(Type type, @Nullable CaseGui obj, ConfigurationNode target) {
+   }
+
+   private CaseGui.Item loadGUIItem(String i, @NotNull ConfigurationNode itemSection, Set<Integer> currentSlots) throws SerializationException {
+      CaseGui.Item item = (CaseGui.Item)itemSection.get(CaseGui.Item.class);
+      if (item == null) {
+         return null;
+      } else if (item.slots().isEmpty()) {
+         DCAPI.getInstance().getPlatform().getLogger().warning("Item " + i + " has no specified slots");
+         return null;
+      } else {
+         List var10000 = item.slots();
+         Objects.requireNonNull(currentSlots);
+         if (var10000.removeIf(currentSlots::contains)) {
+            DCAPI.getInstance().getPlatform().getLogger().warning("Item " + i + " contains duplicated slots, removing..");
+         }
+
+         currentSlots.addAll(item.slots());
+         CaseDataMaterial material = (CaseDataMaterial)itemSection.get(CaseDataMaterial.class);
+         if (material == null) {
+            return null;
+         } else {
+            if (!item.type().equalsIgnoreCase("DEFAULT")) {
+               Optional<TypedItem> typedItem = DCAPI.getInstance().getGuiTypedItemManager().getFromString(item.toString());
+               if (typedItem.isPresent() && ((TypedItem)typedItem.get()).loadOnCase()) {
+                  material.itemStack(DCAPI.getInstance().getPlatform().getTools().loadCaseItem(item.material().id()));
+               }
+            }
+
+            return item;
+         }
+      }
+   }
+
+   public static class Item implements TypeSerializer<CaseGui.Item> {
+      public CaseGui.Item deserialize(Type type, ConfigurationNode source) throws SerializationException {
+         CaseGui.Item item = new CaseGui.Item();
+         String itemType = source.node(new Object[]{"Type"}).getString();
+         CaseDataMaterial material = (CaseDataMaterial)source.node(new Object[]{"Material"}).get(CaseDataMaterial.class);
+         item.type(itemType);
+         item.material(material);
+         item.node(source);
+         item.slots(this.getItemSlots(source));
+         return item;
+      }
+
+      public void serialize(Type type, CaseGui.@Nullable Item obj, ConfigurationNode target) {
+      }
+
+      private List<Integer> getItemSlots(ConfigurationNode itemSection) throws SerializationException {
+         return itemSection.node(new Object[]{"Slots"}).isList() ? this.getItemSlotsListed(itemSection) : this.getItemSlotsRanged(itemSection);
+      }
+
+      private List<Integer> getItemSlotsListed(ConfigurationNode itemSection) throws SerializationException {
+         List<Integer> slots = new ArrayList();
+         List<String> temp = itemSection.node(new Object[]{"Slots"}).getList(String.class);
+         if (temp != null) {
+            for(String slot : temp) {
+               String[] values = slot.split("-", 2);
+               if (values.length == 2) {
+                  for(int i = Integer.parseInt(values[0]); i <= Integer.parseInt(values[1]); ++i) {
+                     slots.add(i);
+                  }
+               } else {
+                  slots.add(Integer.parseInt(slot));
+               }
+            }
+         }
+
+         return slots;
+      }
+
+      private List<Integer> getItemSlotsRanged(ConfigurationNode itemSection) {
+         String slots = itemSection.node(new Object[]{"Slots"}).getString();
+         if (slots != null && !slots.isEmpty()) {
+            String[] slotArgs = slots.split("-");
+            int range1 = Integer.parseInt(slotArgs[0]);
+            int range2 = slotArgs.length >= 2 ? Integer.parseInt(slotArgs[1]) : range1;
+            return (List)IntStream.rangeClosed(range1, range2).boxed().collect(Collectors.toList());
+         } else {
+            return new ArrayList();
+         }
+      }
+   }
+}

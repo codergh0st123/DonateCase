@@ -1,0 +1,46 @@
+name: DonateCase
+main: com.jodexindustries.donatecase.spigot.BukkitDonateCase
+author: _Jodex__
+version: '2.2.9.1'
+website: "https://jodexindustries.xyz/"
+libraries:
+  - com.j256.ormlite:ormlite-jdbc:6.1
+  - org.spongepowered:configurate-yaml:4.1.2
+  - redis.clients:jedis:5.2.0
+softdepend:
+  - LuckPerms
+  - PlaceholderAPI
+  - CustomHeads
+  - ProtocolLib
+  - HeadDatabase
+  - DecentHolograms
+  - CMI
+  - HolographicDisplays
+  - FancyHolograms
+  - Multiverse-Core
+  - MultiWorld
+  - packetevents
+  - ItemsAdder
+  - Oraxen
+api-version: 1.16
+commands:
+  donatecase:
+    aliases: [dc]
+permissions:
+  donatecase.player:
+    default: true
+  donatecase.mod:
+    default: op
+    children:
+      donatecase.player: true
+  donatecase.admin:
+    default: op
+    children:
+      donatecase.player: true
+      donatecase.mod: true
+  donatecase.*:
+    default: op
+    children:
+      donatecase.player: true
+      donatecase.mod: true
+      donatecase.admin: true
