@@ -30,13 +30,11 @@ case:
     Toggle: true
     # The height of the hologram above the case.
     Height: 1.5
-    # The distance the hologram can be seen. Only works with CMI and DecentHolograms
+    # The distance the hologram can be seen. Works with CMI, DecentHolograms and GDisplayHologram
     Range: 8
-    # The message that will be displayed by legacy hologram drivers.
+    # The message that will be displayed above the case.
     Message:
       - '&6DonateCase'
-    # Type from plugins/GDisplayHologram/config.yml used by the GDisplayHologram driver.
-    GDISPLAY_TYPE: CASE
 
   ## FancyHolograms
   #    type: TEXT

@@ -11,7 +11,6 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 
 public class GDisplayHologramsImpl implements HologramDriver {
@@ -30,31 +29,13 @@ public class GDisplayHologramsImpl implements HologramDriver {
             return;
         }
 
-        String type = caseHologram.node().node("GDISPLAY_TYPE").getString();
-
-        if (type == null || type.isBlank()) {
-            DCAPI.getInstance().getPlatform().getLogger().warning(
-                    "Для голограммы кейса не указан GDISPLAY_TYPE."
-            );
-            return;
-        }
-
-        Object configuration = OptionalPluginApi.invoke(plugin, "getHologramConfiguration");
-        Object result = OptionalPluginApi.invoke(configuration, "find", type);
-
-        if (!(result instanceof Optional<?> definition) || definition.isEmpty()) {
-            DCAPI.getInstance().getPlatform().getLogger().warning(
-                    "Тип GDisplayHologram " + type + " для кейса не найден в config.yml."
-            );
-            return;
-        }
-
         UUID hologramId = UUID.randomUUID();
         Object created = OptionalPluginApi.invoke(
                 plugin,
-                "createHologram",
+                "createDonateCaseHologram",
                 hologramId,
-                definition.get(),
+                caseHologram.messages(),
+                caseHologram.range(),
                 BukkitUtils.toBukkit(block).add(0.5D, caseHologram.height(), 0.5D)
         );
 
