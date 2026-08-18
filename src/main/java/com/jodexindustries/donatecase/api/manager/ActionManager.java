@@ -41,7 +41,7 @@ public interface ActionManager {
    @NotNull Map<String, CaseAction> getMap();
 
    default Optional<String> getByStart(@NotNull String prefix) {
-      return this.getMap().keySet().stream().filter(name -> name.startsWith(prefix)).sorted().findFirst();
+      return this.getMap().keySet().stream().filter(prefix::startsWith).sorted().findFirst();
    }
 
    void execute(@Nullable DCPlayer var1, @NotNull String var2, int var3);

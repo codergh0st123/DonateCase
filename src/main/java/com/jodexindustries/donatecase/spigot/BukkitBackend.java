@@ -263,14 +263,9 @@ public class BukkitBackend extends BackendPlatform {
    }
 
    private void loadPacketEventsAPI() {
-      if (Bukkit.getServer().getPluginManager().isPluginEnabled("packetevents")) {
-         try {
-            this.packetEventsSupport = new PacketEventsSupport(this);
-         } catch (Throwable e) {
-            this.getLogger().log(Level.WARNING, "Error hooking to packetevents: ", e);
-         }
+      if (this.api.getConfigManager().getConfig().usePackets()) {
+         this.getLogger().warning("UsePackets отключён: встроенный хук PacketEvents небезопасен для текущих версий Paper и PacketEvents.");
       }
-
    }
 
    private void loadLuckPerms() {

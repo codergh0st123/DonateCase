@@ -33,10 +33,8 @@ public interface GUITypedItemManager {
    @NotNull Map<String, TypedItem> getMap();
 
    default Optional<String> getByStart(@NotNull String string) {
-      String prefix = string.toLowerCase();
-      return this.getMap().keySet().stream()
-              .filter(name -> name.toLowerCase().startsWith(prefix))
-              .findFirst();
+      String value = string.toLowerCase();
+      return this.getMap().keySet().stream().filter(value::startsWith).findFirst();
    }
 
    Optional<TypedItem> getFromString(@NotNull String var1);

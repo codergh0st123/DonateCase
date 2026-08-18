@@ -35,6 +35,6 @@ public interface MaterialManager {
    @NotNull Map<String, CaseMaterial> getMap();
 
    default Optional<String> getByStart(@NotNull String string) {
-      return this.getMap().keySet().stream().filter(name -> name.startsWith(string)).findFirst();
+      return this.getMap().keySet().stream().filter(string::startsWith).findFirst();
    }
 }
