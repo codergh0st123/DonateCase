@@ -27,12 +27,9 @@ public class OPENItemClickHandlerImpl implements TypedItemClickHandler {
       String itemType = e.itemType();
       CaseData caseData = gui.getCaseData();
       String caseType = caseData.caseType();
-      if (itemType.contains("_")) {
-         String[] parts = itemType.split("_");
-         if (parts.length >= 2) {
-            caseType = parts[1];
-            caseData = DCAPI.getInstance().getCaseManager().get(caseType);
-         }
+      if (itemType.regionMatches(true, 0, "OPEN_", 0, "OPEN_".length())) {
+         caseType = itemType.substring("OPEN_".length());
+         caseData = DCAPI.getInstance().getCaseManager().get(caseType);
       }
 
       if (caseData != null) {
