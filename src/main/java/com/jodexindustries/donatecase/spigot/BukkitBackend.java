@@ -202,6 +202,7 @@ public class BukkitBackend extends BackendPlatform {
       manager.register(CaseAnimation.builder().name("FIREWORK").addon(this).animation(FireworkAnimation.class).description("Fireworks fly to the skies and a prize appears").requireSettings(true).requireBlock(true).build());
       manager.register(CaseAnimation.builder().name("WHEEL").addon(this).animation(WheelAnimation.class).description("Items resolve around the case").requireSettings(true).requireBlock(true).build());
       manager.register(CaseAnimation.builder().name("SELECT").addon(this).animation(SelectAnimation.class).description("Select your prize manually").requireSettings(true).requireBlock(true).build());
+      manager.register(CaseAnimation.builder().name("BOX_SELECT").addon(this).animation(SelectAnimation.class).description("Choose a chest before the prize is revealed").requireSettings(true).requireBlock(true).build());
       this.api.getEventBus().register(ArmorStandCreatorInteractEvent.class, new SelectAnimationListener());
       manager.register(CaseAnimation.builder().name("POP").addon(this).animation(PopAnimation.class).description("Items pop").requireSettings(true).requireBlock(true).build());
       this.getLogger().info("Registered " + manager.getMap().size() + " animations");
