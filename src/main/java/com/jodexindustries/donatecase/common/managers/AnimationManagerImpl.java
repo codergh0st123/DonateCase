@@ -110,11 +110,6 @@ public class AnimationManagerImpl implements AnimationManager {
                temp.yaw(caseLocation.yaw());
             }
 
-            CaseData.Hologram hologram = data.hologram();
-            if (hologram != null && hologram.enabled()) {
-               this.api.getHologramManager().remove(temp);
-            }
-
             for(CaseGuiWrapper gui : this.api.getGUIManager().getMap().values()) {
                if (gui.getLocation().equals(temp)) {
                   gui.getPlayer().closeInventory();
@@ -134,6 +129,13 @@ public class AnimationManagerImpl implements AnimationManager {
             ((List)activeCasesByBlock.computeIfAbsent(temp, (k) -> new ArrayList<>())).add(uuid);
             this.api.getPlatform().getScheduler().run(this.backend, (Runnable)(() -> {
                try {
+                  if (caseAnimation.isRequireBlock()) {
+                     CaseData.Hologram hologram = data.hologram();
+                     if (hologram != null && hologram.enabled()) {
+                        this.api.getHologramManager().remove(temp);
+                     }
+                  }
+
                   javaAnimation.start();
                   animationCompletion.complete(uuid);
                   this.api.getEventBus().post((DCEvent)(new AnimationStartEvent(activeCase)));
@@ -141,6 +143,10 @@ public class AnimationManagerImpl implements AnimationManager {
                   this.backend.getLogger().log(Level.WARNING, "Error with starting animation " + animation, t);
                   if (caseAnimation.isRequireBlock()) {
                      activeCasesByBlock.remove(temp);
+                     CaseData.Hologram hologram = data.hologram();
+                     if (hologram != null && hologram.enabled()) {
+                        this.api.getHologramManager().create(temp, hologram);
+                     }
                   }
 
                   activeCases.remove(uuid);

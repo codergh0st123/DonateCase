@@ -11,7 +11,13 @@ import com.jodexindustries.donatecase.api.event.player.GuiClickEvent;
 import com.jodexindustries.donatecase.api.event.player.OpenCaseEvent;
 import com.jodexindustries.donatecase.api.event.player.PreOpenCaseEvent;
 import com.jodexindustries.donatecase.api.platform.DCPlayer;
+import com.jodexindustries.donatecase.spigot.tools.BukkitUtils;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ThreadLocalRandom;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 public class OPENItemClickHandlerImpl implements TypedItemClickHandler {
@@ -51,6 +57,7 @@ public class OPENItemClickHandlerImpl implements TypedItemClickHandler {
                }
             } else {
                DCAPI.getInstance().getActionManager().execute(player, caseData.noKeyActions());
+               Bukkit.getScheduler().runTask(BukkitUtils.getDonateCase(), () -> pushPlayerFromCase(player, location));
             }
 
          });
@@ -74,6 +81,19 @@ public class OPENItemClickHandlerImpl implements TypedItemClickHandler {
          }
 
       });
+   }
+
+   private static void pushPlayerFromCase(DCPlayer player, CaseLocation caseLocation) {
+      Player bukkitPlayer = BukkitUtils.toBukkit(player);
+      Location caseCenter = BukkitUtils.toBukkit(caseLocation).add(0.5D, 0.0D, 0.5D);
+      Vector direction = bukkitPlayer.getLocation().toVector().subtract(caseCenter.toVector()).setY(0.0D);
+
+      if (direction.lengthSquared() < 0.01D) {
+         direction = bukkitPlayer.getLocation().getDirection().multiply(-1.0D).setY(0.0D);
+      }
+
+      double distance = ThreadLocalRandom.current().nextDouble(2.0D, 4.0D);
+      bukkitPlayer.setVelocity(direction.normalize().multiply(distance).setY(0.25D));
    }
 
    private static CompletableFuture<Boolean> checkKeys(PreOpenCaseEvent event) {
