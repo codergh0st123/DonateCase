@@ -263,8 +263,19 @@ public class BukkitBackend extends BackendPlatform {
    }
 
    private void loadPacketEventsAPI() {
-      if (this.api.getConfigManager().getConfig().usePackets()) {
-         this.getLogger().warning("UsePackets отключён: встроенный хук PacketEvents небезопасен для текущих версий Paper и PacketEvents.");
+      if (!this.api.getConfigManager().getConfig().usePackets()) {
+         return;
+      }
+
+      if (!Bukkit.getPluginManager().isPluginEnabled("packetevents")) {
+         this.getLogger().warning("UsePackets включён, но плагин PacketEvents не найден или ещё не загружен.");
+         return;
+      }
+
+      try {
+         this.packetEventsSupport = new PacketEventsSupport(this);
+      } catch (Throwable exception) {
+         this.getLogger().log(Level.WARNING, "Не удалось включить пакетный режим DonateCase.", exception);
       }
    }
 
