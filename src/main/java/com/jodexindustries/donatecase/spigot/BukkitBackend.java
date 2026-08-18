@@ -98,6 +98,7 @@ public class BukkitBackend extends BackendPlatform {
       this.loadHologramDrivers();
       Bukkit.getServer().getPluginManager().registerEvents(new EventListener(this), this.plugin);
       this.api.load();
+      Bukkit.getScheduler().runTask(this.plugin, () -> this.api.getHologramManager().load());
       this.loadMetrics();
       this.loadPacketEventsAPI();
       this.loadLuckPerms();
