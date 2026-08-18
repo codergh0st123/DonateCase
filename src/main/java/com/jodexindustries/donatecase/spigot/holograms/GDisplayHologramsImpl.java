@@ -54,9 +54,17 @@ public class GDisplayHologramsImpl implements HologramDriver {
                     UUID.class,
                     List.class,
                     int.class,
+                    double.class,
                     Location.class
             );
-            Object result = method.invoke(plugin, hologramId, messages, caseHologram.range(), location);
+            Object result = method.invoke(
+                    plugin,
+                    hologramId,
+                    messages,
+                    caseHologram.range(),
+                    caseHologram.height(),
+                    BukkitUtils.toBukkit(block)
+            );
 
             if (Boolean.TRUE.equals(result)) {
                 holograms.put(block, hologramId);
@@ -85,11 +93,6 @@ public class GDisplayHologramsImpl implements HologramDriver {
     @Override
     public void remove(CaseLocation block) {
         UUID hologramId = holograms.remove(block);
-
-        if (hologramId == null) {
-            return;
-        }
-
         Plugin plugin = Bukkit.getPluginManager().getPlugin("GDisplayHologram");
 
         if (plugin == null || !plugin.isEnabled()) {
@@ -97,8 +100,13 @@ public class GDisplayHologramsImpl implements HologramDriver {
         }
 
         try {
-            Method method = plugin.getClass().getMethod("removeHologram", UUID.class);
-            method.invoke(plugin, hologramId);
+            if (hologramId != null) {
+                Method removeById = plugin.getClass().getMethod("removeHologram", UUID.class);
+                removeById.invoke(plugin, hologramId);
+            }
+
+            Method removeByBlock = plugin.getClass().getMethod("removeDonateCaseHolograms", Location.class);
+            removeByBlock.invoke(plugin, BukkitUtils.toBukkit(block));
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException exception) {
             DCAPI.getInstance().getPlatform().getLogger().log(
                     Level.WARNING,
