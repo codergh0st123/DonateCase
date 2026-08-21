@@ -76,7 +76,7 @@ public class ActionManagerImpl implements ActionManager {
 
    public void execute(@Nullable DCPlayer player, @NotNull List<String> actions) {
       for(String action : actions) {
-         if (player != null) {
+         if (player != null && !action.regionMatches(true, 0, "[broadcast]", 0, 11)) {
             action = DCTools.rc(this.api.getPlatform().getPAPI().setPlaceholders(player, action));
          }
 
