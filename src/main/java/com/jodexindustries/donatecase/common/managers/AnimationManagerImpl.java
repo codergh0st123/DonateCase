@@ -286,10 +286,14 @@ public class AnimationManagerImpl implements AnimationManager {
       placeholders.addAll(LocalPlaceholder.of(item));
       List<String> configuredActions = item.getActionsBasedOnChoice(randomAction, alternative);
       List<String> localizedActions = configuredActions.stream()
-              .map(action -> this.api.getPlatform().getPAPI().setPlaceholders(player, action))
+              .map(action -> this.isBroadcastAction(action) ? action : this.api.getPlatform().getPAPI().setPlaceholders(player, action))
               .toList();
       List<String> actions = DCTools.rt(localizedActions, placeholders);
       this.api.getActionManager().execute(player, actions);
+   }
+
+   private boolean isBroadcastAction(String action) {
+      return action.regionMatches(true, 0, "[broadcast]", 0, 11);
    }
 
    public static boolean isBetterOrEqual(Map<String, Integer> groupLevels, String playerGroup, String rewardGroup) {
