@@ -8,7 +8,8 @@ public class ColorUtils {
    private static final Pattern HEX_PATTERN = Pattern.compile("#([A-Fa-f0-9]{6})");
 
    public static String color(String text) {
-      Matcher matcher = HEX_PATTERN.matcher(text);
+      String normalized = text.replace("&#", "#");
+      Matcher matcher = HEX_PATTERN.matcher(normalized);
       StringBuffer sb = new StringBuffer();
 
       while(matcher.find()) {

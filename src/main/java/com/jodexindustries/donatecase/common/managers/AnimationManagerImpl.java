@@ -284,7 +284,11 @@ public class AnimationManagerImpl implements AnimationManager {
       Collection<LocalPlaceholder> placeholders = LocalPlaceholder.of(caseData);
       placeholders.add(LocalPlaceholder.of("%player%", player.getName()));
       placeholders.addAll(LocalPlaceholder.of(item));
-      List<String> actions = DCTools.rt(item.getActionsBasedOnChoice(randomAction, alternative), placeholders);
+      List<String> configuredActions = item.getActionsBasedOnChoice(randomAction, alternative);
+      List<String> localizedActions = configuredActions.stream()
+              .map(action -> this.api.getPlatform().getPAPI().setPlaceholders(player, action))
+              .toList();
+      List<String> actions = DCTools.rt(localizedActions, placeholders);
       this.api.getActionManager().execute(player, actions);
    }
 
