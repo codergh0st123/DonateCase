@@ -1,6 +1,7 @@
 package com.jodexindustries.donatecase.spigot.hook.papi;
 
 import com.jodexindustries.donatecase.api.platform.DCPlayer;
+import com.jodexindustries.donatecase.api.tools.DCTools;
 import com.jodexindustries.donatecase.api.tools.PAPI;
 import com.jodexindustries.donatecase.spigot.BukkitBackend;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -37,7 +38,7 @@ public class PAPISupport implements PAPI {
       if (this.donateCaseExpansion == null) {
          return text;
       } else if (player instanceof OfflinePlayer) {
-         return PlaceholderAPI.setPlaceholders((OfflinePlayer)player, text);
+         return DCTools.rc(PlaceholderAPI.setPlaceholders((OfflinePlayer)player, text));
       } else {
          return player instanceof DCPlayer ? this.setPlaceholders((DCPlayer)player, text) : text;
       }
