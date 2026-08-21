@@ -19,11 +19,14 @@ import com.jodexindustries.donatecase.api.tools.ProbabilityCollection;
 import com.jodexindustries.donatecase.common.DonateCase;
 import com.jodexindustries.donatecase.common.platform.BackendPlatform;
 import com.jodexindustries.donatecase.common.tools.LocalPlaceholder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
@@ -288,12 +291,25 @@ public class AnimationManagerImpl implements AnimationManager {
       List<String> localizedActions = configuredActions.stream()
               .map(action -> this.isBroadcastAction(action) ? action : this.api.getPlatform().getPAPI().setPlaceholders(player, action))
               .toList();
-      List<String> actions = DCTools.rt(localizedActions, placeholders);
+      List<String> actions = localizedActions.stream()
+              .map(action -> this.isBroadcastAction(action) ? this.withBroadcastPlaceholders(action, placeholders) : DCTools.rt(action, placeholders))
+              .toList();
       this.api.getActionManager().execute(player, actions);
    }
 
    private boolean isBroadcastAction(String action) {
       return action.regionMatches(true, 0, "[broadcast]", 0, 11);
+   }
+
+   private String withBroadcastPlaceholders(String action, Collection<LocalPlaceholder> placeholders) {
+      String values = placeholders.stream()
+              .map(placeholder -> this.encode(placeholder.name()) + "." + this.encode(placeholder.value()))
+              .collect(Collectors.joining(","));
+      return action + " [donatecase-placeholders:" + values + "]";
+   }
+
+   private String encode(String value) {
+      return Base64.getUrlEncoder().withoutPadding().encodeToString(value.getBytes(StandardCharsets.UTF_8));
    }
 
    public static boolean isBetterOrEqual(Map<String, Integer> groupLevels, String playerGroup, String rewardGroup) {
